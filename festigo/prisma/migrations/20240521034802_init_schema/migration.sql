@@ -6,7 +6,7 @@ CREATE TABLE "Event" (
     "endDateTime" TIMESTAMP(3) NOT NULL,
     "hostId" TEXT NOT NULL,
     "venueId" TEXT NOT NULL,
-
+    
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
 
