@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Event {
+  id            String         @id @default(uuid())
+  eventName     String
+  startDateTime DateTime
+  endDateTime   DateTime
+  hostId        String
+  venueId       String
+
+  host          Users      @relation(fields: [hostId], references: [id])
+  venue         Venue      @relation(fields: [venueId], references: [id])
+  guestRsvps    Guest_RSVP[]
+  paymentsLedger PaymentsLedger[]
+  chatparticipants   ChatParticipant[]
+  channelparticipant ChannelParticipant[]
+  budget        Budget?     
+}
+
+model Guest_RSVP {
+  id      String    @id @default(uuid())
+  name    String
+  email   String
+  phone   String @unique
+  eventId String   
+  rsvpStatus  String  @default("pending")
+  event   Event  @relation(fields: [eventId], references: [id])
+
+  @@unique([phone, eventId])
+}
+
+model Users {
+  id                 String     @id @default(uuid())
+  username           String  @unique
+  email              String  @unique
+  password           String
+  phoneNumber        String    @unique
+  authenticationType String
+  events             Event[]
+  role               String
+  paymentLedgers     PaymentsLedger[]
+  chatparticipants   ChatParticipant[]
+}
+
+model Venue {
+  id       String     @id @default(uuid())
+  venueName String
+  location String
+  capacity Int
+  events   Event[]
+}
+
+model Vendor {
+  id          String     @id @default(uuid())
+  vendorId      String     @unique
+  vendorName  String
+  serviceType String
+  contactInfo String
+  paymentsLedger PaymentsLedger[]
+}
+
+model Chat {
+  id         String      @id @default(uuid())
+  senderId   String
+  receiverId String
+  message    String
+  timestamp  DateTime @default(now())
+
+  participants ChatParticipant[]
+}
+
+model ChatParticipant {
+  id             String      @id @default(uuid())
+  chatId         String
+  participantId  String
+  eventId        String
+  participantType String
+  chat           Chat     @relation(fields: [chatId], references: [id])
+  participant Users @relation(fields: [participantId], references: [id])
+  event          Event    @relation(fields: [eventId], references: [id])
+}
+
+model PaymentsLedger {
+  id           String     @id @default(uuid())
+  paymentAmount Decimal
+  paymentDate  DateTime
+  dueDate      DateTime
+  payerId      String
+  payeeId      String
+  eventId      String
+  status       String
+  event        Event    @relation(fields: [eventId], references: [id])
+  payer        Users    @relation(fields: [payerId], references: [id])
+  payee        Vendor   @relation(fields: [payeeId], references: [id])
+}
+
+model Budget {
+  id             String     @id @default(uuid())
+  eventId        String     @unique
+  totalBudget    Decimal
+  allocatedBudget Decimal
+  remainingBudget Decimal
+  event          Event   @relation(fields: [eventId], references: [id])
+}
+
+model Channel {
+  id           String     @id @default(uuid())
+  channelName  String
+  channelType  String
+ 
+  participants ChannelParticipant[]
+  messages     ChannelMessage[]
+}
+
+model ChannelParticipant {
+  id            String     @id @default(uuid())
+  channelId     String
+  participantId String
+  eventId       String
+  role          String
+  channel       Channel @relation(fields: [channelId], references: [id])
+  event         Event    @relation(fields: [eventId], references: [id])
+}
+
+model ChannelMessage {
+  id         String      @id @default(uuid())
+  channelId  String
+  senderId   String
+  message    String
+  timestamp  DateTime @default(now())
+  channel    Channel  @relation(fields: [channelId], references: [id])
+}
