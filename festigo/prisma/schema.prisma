@@ -22,11 +22,11 @@ model Event {
   hostId        String
   venueId       String
 
-  host          Users      @relation(fields: [hostId], references: [id])
+  host          Users      @relation(fields: [hostId], references: [username])
   venue         Venue      @relation(fields: [venueId], references: [id])
   guestRsvps    Guest_RSVP[]
   paymentsLedger PaymentsLedger[]
-  chatparticipants   ChatParticipant[]
+  chats Chat[]
   channelparticipant ChannelParticipant[]
   budget        Budget?     
 }
@@ -53,7 +53,7 @@ model Users {
   events             Event[]
   role               String
   paymentLedgers     PaymentsLedger[]
-  chatparticipants   ChatParticipant[]
+ 
 }
 
 model Venue {
@@ -79,20 +79,23 @@ model Chat {
   receiverId String
   message    String
   timestamp  DateTime @default(now())
-
-  participants ChatParticipant[]
-}
-
-model ChatParticipant {
-  id             String      @id @default(uuid())
-  chatId         String
-  participantId  String
-  eventId        String
-  participantType String
-  chat           Chat     @relation(fields: [chatId], references: [id])
-  participant Users @relation(fields: [participantId], references: [id])
+  isEdited   Boolean @default(false)
+  isDeleted  Boolean @default(false)
+  eventId    String
   event          Event    @relation(fields: [eventId], references: [id])
+
 }
+
+// model ChatParticipant {
+//   id             String      @id @default(uuid())
+//   chatId         String
+//   participantId  String
+//   eventId        String
+//   participantType String
+//   chat           Chat     @relation(fields: [chatId], references: [id])
+//   participant Users @relation(fields: [participantId], references: [id])
+//   event          Event    @relation(fields: [eventId], references: [id])
+// }
 
 model PaymentsLedger {
   id           String     @id @default(uuid())
