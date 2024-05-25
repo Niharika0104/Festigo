@@ -29,3 +29,6 @@
    - 4.4 sendmessageinchannel
    - 4.5 editmessageinchannel
    - 4.6 deletemessageinchannel
+5. **Payments**
+   - 5.1 getallpayments
+   - 5.2 makeanpayment
