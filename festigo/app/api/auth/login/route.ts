@@ -1,50 +1,73 @@
 import client from "../../../db"
 import bcrypt from 'bcrypt';
-import { Role,Authentication } from "@/Utils/Enums";
+import { Role, Authentication } from "@/Utils/Enums";
 
-import { NextRequest,NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 
 
 interface User {
     username: string;
     password: string;
-   email:string;
+    email: string;
 }
 
-    
 
-export  async function POST(req:NextRequest,res:NextResponse){
+
+export async function POST(req: NextRequest, res: NextResponse) {
     try {
         // Parse request body
         const userdata: User = await req.json();
         const user = await client.users.findFirst({
-            where: { 
-                OR:[
-                    { username: userdata.username }, 
-                    { email: userdata.email } 
+            where: {
+                OR: [
+                    { username: userdata.username },
+                    { email: userdata.email }
                 ]
-             }, 
-          });
-       if(user!=null){
+            },
+        });
+        if (user != null) {
 
-      
-        const hashedPassword: boolean = await bcrypt.compare(userdata.password, user.password);
-           if(hashedPassword){
-          return      NextResponse.json(user);
-           }else{
-            return    NextResponse.json({message:"incorrect password",statusbar:401})
-           }
-       }
-      
-        return NextResponse.json({"message":"user doesnot exists"})
-       
- 
-      
-  
-    } catch (error) {
+
+            const hashedPassword: boolean = await bcrypt.compare(userdata.password, user.password);
+            
+            if (hashedPassword) {
+
+                return NextResponse.json(user);
+
+            } else {
+
+                return NextResponse.json({ message: "incorrect password", statusbar: 401 })
+
+            }
+        }
+
+        return NextResponse.json({ "message": "user doesnot exists" })
+
+
+
+
+    } catch (error: any) {
+
         console.error("Error creating user:", error);
+
         // Send error response with appropriate status code
-       // res.status(500).json({ error: "Error creating user" });
+
+        return NextResponse.json({
+
+            message: "some error occurred while login user ",
+            errro: error.message,
+            data: null
+
+        }, {
+
+            status: 400
+        })
+
     }
 }
+
+
+
+
+

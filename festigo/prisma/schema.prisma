@@ -142,3 +142,6 @@ model ChannelMessage {
   timestamp  DateTime @default(now())
   channel    Channel  @relation(fields: [channelId], references: [id])
 }
+
+
+

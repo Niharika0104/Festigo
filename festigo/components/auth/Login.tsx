@@ -12,30 +12,72 @@ import bgImage from "../../public/assests/loginLightBg.jpg";
 
 import homeIcon from "../../public/assests/icons/home.gif";
 
+import axios from "axios";
+
+import toast from "react-hot-toast";
+
+import { useRouter } from "next/navigation";
+
 export default function Login() {
+
+  const router = useRouter();
+  
+  const [isHover, setIsHover] = useState(false);
 
   const [userData, setUserData] = useState({ email: "", password: "", rememberme: false });
 
   function changeHandler(event: ChangeEvent<HTMLInputElement>) {
 
     setUserData({ ...userData, [event.target.name]: event.target.value });
-    
+
   }
 
   function handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
 
-    setUserData({ ...userData, rememberme: event.target.checked })
-    ;
+    setUserData({ ...userData, rememberme: event.target.checked });
+
   }
 
-  function submitHandler(event: FormEvent) {
+
+  async function submitHandler(event: FormEvent) {
 
     event.preventDefault();
     console.log(userData);
 
+    try{
+
+      const response = await axios.post("/api/auth/login", {
+  
+        email: userData.email,
+        password: userData.password,
+  
+      })
+
+      // console.log("response: ",response.data.statusbar );
+
+      if(response?.data.statusbar === 200){
+
+        toast.success("user logged in successfully");
+
+        router.push("/");
+
+
+      }else{
+
+        toast.success(response.data.message);
+
+      }
+  
+
+    }catch(error:any){
+
+      toast.error(error.message);
+
+    }
+
+
   }
 
-  const [isHover, setIsHover] = useState(false);
 
   return (
     <div className="relative flex flex-col gap-12 justify-center items-center w-screen min-h-screen mx-auto">
@@ -52,8 +94,8 @@ export default function Login() {
 
       {
 
-        !isHover && 
-        
+        !isHover &&
+
         <div className="flex flex-col gap-1 absolute w-fit  top-2 right-2 invisible md:visible">
 
           <Image src={homeIcon} alt="" className="w-14 h-14 " />

@@ -12,3 +12,4 @@ export enum Authentication{
    GITHUB="github",
    EMAIL="email"
 }
+

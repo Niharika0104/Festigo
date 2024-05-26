@@ -20,12 +20,33 @@ import { CountryCode } from "@/constants/CountryCode";
 
 import { FaPhoneSquareAlt } from "react-icons/fa";
 
+import axios from "axios";
 
+import { Role } from "@/Utils/Enums";
+
+import toast from "react-hot-toast";
+
+import { useRouter } from "next/navigation";
+
+
+interface User {
+
+    username: string;
+    email: string;
+    phonenumber: string;
+    password: string;
+    role: string;
+}
 
 
 export default function Signup() {
 
-    const [userData, setUserData] = useState({ firstName: "", lastName: "", email: "", password: "", countryCode: "+91", phoneNo: "", termsAndConditions: false });
+    const router = useRouter();
+
+
+    const [userData, setUserData] = useState({ firstName: "", lastName: "", email: "", password: "", countryCode: "+91", phonenumber: "", termsAndConditions: false, role: Role.ADMIN });
+
+    const [isHover, setIsHover] = useState(false);
 
     function changeHandler(event: ChangeEvent<HTMLInputElement>) {
 
@@ -34,20 +55,46 @@ export default function Signup() {
     }
 
     function handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
-
+        
         setUserData({ ...userData, termsAndConditions: event.target.checked });
 
     }
 
-    function submitHandler(event: FormEvent) {
+    async function submitHandler(event: FormEvent) {
 
         event.preventDefault();
 
         console.log(userData);
 
+        try {
+
+            const response = await axios.post("/api/auth/register", {
+
+                username: userData.firstName + " " + userData.lastName,
+                email: userData.email,
+                phonenumber: userData.countryCode + userData.phonenumber,
+                password: userData.password,
+                role: userData.role,
+                termsAndConditions: userData.termsAndConditions
+
+            })
+
+            console.log("user data is ", response.data);
+
+            toast.success(response?.data?.message)
+
+            router.push("/auth/login");
+
+
+        } catch (error: any) {
+
+            console.log(error.message);
+            toast.error(error.message);
+
+        }
+
     }
 
-    const [isHover, setIsHover] = useState(false);
 
     return (
 
@@ -147,11 +194,11 @@ export default function Signup() {
 
                             <InputField
 
-                                type="string"
-                                name="phoneNo"
-                                value={userData.phoneNo}
-                                onChange={changeHandler}
+                                type="text"
+                                name="phonenumber"
                                 required={true}
+                                value={userData.phonenumber}
+                                onChange={changeHandler}
                                 icon={<FaPhoneSquareAlt />}
                                 placeholder="mobile no:"
 

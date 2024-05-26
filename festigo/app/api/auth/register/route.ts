@@ -39,11 +39,38 @@ export  async function POST(req:NextRequest,res:NextResponse){
         });
    
         // Send success response with created user data
+
+        return NextResponse.json({
+
+            message:"user is successfully created",
+            data:user,
+            errro:null,
+
+        },{
+
+            status:200
+        })
+
+
       
     return NextResponse.json(user);
-    } catch (error) {
+
+    } catch (error:any) {
+
         console.error("Error creating user:", error);
+        
         // Send error response with appropriate status code
-       // res.status(500).json({ error: "Error creating user" });
+
+        return NextResponse.json({
+
+            message:"some error occurred while creating user ",
+            errro:error.message,
+            data:null
+
+        },{
+
+            status:400
+        })
     }
 }
+
