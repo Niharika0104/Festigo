@@ -4,24 +4,22 @@ import { Role,Authentication,ChannelType } from "@/Utils/Enums";
 import jwt from 'jsonwebtoken'
 import { NextRequest,NextResponse } from 'next/server'
 
-interface MessageData {
+interface ChannelData {
   channelId:string;
-  senderId: string;
-  message :  string;
 
   }
 export  async function POST(req:NextRequest, res:NextResponse){
  
     try{
-    const body:MessageData=await req.json();
+    const body:ChannelData=await req.json();
 
-    const joinedData = await client.channelMessage.create(
+    const joinedData = await client.channel.findFirst(
         {
-            data:{
-                channelId:body.channelId,
-                senderId:body.senderId,
-                message:body.message
-
+            where:{
+                id:body.channelId
+            },
+            include:{
+                messages:true
             }
         }
     );

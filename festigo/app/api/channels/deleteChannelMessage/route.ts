@@ -5,22 +5,21 @@ import jwt from 'jsonwebtoken'
 import { NextRequest,NextResponse } from 'next/server'
 
 interface MessageData {
-  channelId:string;
-  senderId: string;
-  message :  string;
-
+  id:string
   }
 export  async function POST(req:NextRequest, res:NextResponse){
  
     try{
     const body:MessageData=await req.json();
 
-    const joinedData = await client.channelMessage.create(
+    const joinedData = await client.channelMessage.update(
         {
+            where:{
+id:body.id
+            },
             data:{
-                channelId:body.channelId,
-                senderId:body.senderId,
-                message:body.message
+                
+              isDeleted:true
 
             }
         }
