@@ -19,11 +19,13 @@ export  async function POST(req:NextRequest){
     const chats= await client.chat.findMany({where: {
         OR:[{
            AND:[ {senderId:body.senderId},
-            {receiverId:body.receiverId}]
+            {receiverId:body.receiverId},
+        {eventId:body.eventId}]
            },{
             AND:[
             {senderId:body.receiverId},
-            {receiverId:body.senderId}]
+            {receiverId:body.senderId},
+        {eventId:body.eventId}]
        
             
         }]
