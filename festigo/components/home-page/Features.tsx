@@ -6,6 +6,9 @@ import calender from "/public/assets/images/home-calender.png";
 import marketing from "/public/assets/images/home-marketing.png";
 import location from "/public/assets/images/home-location.png";
 import Image, { StaticImageData } from "next/image";
+import shape1 from "/public/assets/images/feature-shape-1.png";
+import shape2 from "/public/assets/images/feature-shape-2.png";
+import shape3 from "/public/assets/images/feature-shape-3.png";
 
 type FeatureCardProps = {
   tagline: string;
@@ -119,9 +122,42 @@ function FeatureCard({
 export function Features() {
   return (
     <div>
-      <div className="w-full bg-white justify-center flex items-center">
+      <div className="w-full bg-white relative z-10 flex-col gap-40 justify-center flex items-center">
+        {/* shape-1 */}
+        <div className="absolute w-[600px] left-[15%] top-10 z-[-10] h-[600px]">
+          <Image src={shape1} alt="shape-1" fill />
+        </div>
+
+        {/* shape-2 */}
+        <div className="absolute w-[600px] right-[10%] top-[40%] z-[-10] h-[600px]">
+          <Image src={shape2} alt="shape-1" fill />
+        </div>
+
+        {/* shape-3 */}
+        <div className="absolute w-[600px] left-[-10%] bottom-5 z-[-10] h-[600px]">
+          <Image src={shape3} alt="shape-1" fill />
+        </div>
+
+        {/* title | subtitle */}
+        <div className="flex w-10/12 flex-col gap-10 justify-center items-center">
+          {/* title */}
+          <div>
+            <p className="font-bold text-7xl">
+              One product, Unlimited solutions
+            </p>
+          </div>
+          {/* subtitle */}
+          <div>
+            <p className="font-thin text-3xl text-center">
+              Our platform provides a range of features, including event
+              creation and the ability to take registrations, all while
+              accommodating multiple admins.
+            </p>
+          </div>
+        </div>
+
         {/* feature cards */}
-        <div className="w-10/12 flex flex-col justify-center items-center gap-40">
+        <div className="w-10/12  flex z-20 flex-col justify-center items-center gap-52">
           {features.map((card, index) => {
             return (
               <FeatureCard

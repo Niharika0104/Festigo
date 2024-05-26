@@ -2,6 +2,7 @@ import React from "react";
 import wedding from "/public/assets/gifs/home-wedding.gif";
 import outdoor from "/public/assets/gifs/outdoor-planner.gif";
 import planner from "/public/assets/gifs/wedding-planner.gif";
+import serviceBg from "/public/assets/images/service-bg.png";
 import Image, { StaticImageData } from "next/image";
 import rightArrow from "/public/assets/images/right-arrow.png";
 
@@ -66,7 +67,11 @@ function Card({ image, labelCss, buttonCss, label, css }: cardDataProps) {
 
 export function Services() {
   return (
-    <div className="flex flex-col pt-20 pb-80 bg-white justify-center gap-1 items-center">
+    <div className="flex flex-col relative w-full pt-20 pb-80 bg-white justify-center gap-1 items-center">
+      {/* bg-image */}
+      <div className="absolute w-full top-10 h-[110vh]">
+        <Image src={serviceBg} alt="image" fill />
+      </div>
       {/* Our services heading */}
       <div>
         <p className="text-[#FF0000] text-2xl">Our Services</p>
