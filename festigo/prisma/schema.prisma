@@ -21,6 +21,7 @@ model Event {
   venue              Venue                @relation(fields: [venueId], references: [id])
   guestRsvps         Guest_RSVP[]
   paymentsLedger     PaymentsLedger[]
+  vendors            Vendor[]
 }
 
 model Guest_RSVP {
@@ -58,10 +59,12 @@ model Venue {
 
 model Vendor {
   id             String           @id @default(uuid())
-  vendorId       String           @unique
+  vendorId       String  @unique
+  eventId       String?           
   vendorName     String
   serviceType    String
   contactInfo    String
+  event  Event[]
   paymentsLedger PaymentsLedger[]
 }
 
