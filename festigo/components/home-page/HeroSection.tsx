@@ -6,8 +6,8 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <div className="w-full h-screen flex justify-center items-center relative">
-      <div className="bg-main-page-hero w-full -z-10 h-screen absolute opacity-20"></div>
+    <div className="w-full bg-main-page-hero z-10 h-screen flex justify-center items-center relative">
+      <div className=" w-full z-[-10] h-screen opacity-80  absolute bg-black"></div>
       {/* logo-Image */}
       <div className="absolute top-5 left-7">
         <div className="relative w-[120px] h-[120px]">
