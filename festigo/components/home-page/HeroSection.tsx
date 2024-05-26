@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../common/Button";
 import logoImage from "/public/assets/images/logo.png";
+import webLogo from "/public/assets/images/main-logo.png";
 import Image from "next/image";
 
 export function HeroSection() {
@@ -14,12 +15,12 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="flex text-white max-w-[800px] justify-center items-center flex-col">
+      <div className="flex mt-40 text-white max-w-[700px] justify-center items-center flex-col">
         {/* website-name | subtitle */}
         <div className="flex flex-col justify-center items-center max-w-[600px]">
           {/* Website Name */}
-          <div>
-            <h3>FESTIGO</h3>
+          <div className="relative w-[450px] h-[100px]">
+            <Image src={webLogo} fill alt="website-logo" />
           </div>
 
           {/* Subtitle Tagline */}

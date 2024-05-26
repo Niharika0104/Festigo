@@ -4,6 +4,8 @@ import { AboutUs } from "@/components/home-page/AboutUs";
 import { Services } from "@/components/home-page/Services";
 import { Features } from "@/components/home-page/Features";
 import { Footer } from "@/components/common/Footer";
+import { Team } from "@/components/home-page/Team";
+import { Slogan } from "@/components/home-page/Slogan";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
       <AboutUs />
       <Services />
       <Features />
+      <Team />
+      <Slogan />
       <Footer />
     </div>
   );
