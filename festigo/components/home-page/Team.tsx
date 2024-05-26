@@ -39,7 +39,8 @@ const team = [
   {
     name: "Adarsh Jain",
     role: "Frontend Dev",
-    description: "",
+    description:
+      "I am a full stack developer with 1 year of experience in designing and implementing web applications using the MERN stack (MongoDB, Express, React, Node.js). I build scalable, high-performance applications that solve real-world problems, delivering comprehensive solutions from user interfaces to server-side logic.",
     image: adarsh,
     bg: adarsh,
   },
