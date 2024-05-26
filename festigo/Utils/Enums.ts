@@ -12,3 +12,12 @@ export enum Authentication{
    GITHUB="github",
    EMAIL="email"
 }
+
+export enum ChannelType{
+    GENERAL="general"
+}
+
+export enum ChannelRoleTypes{
+    REGULAR="regular",
+    ADMIN="admin"
+}
