@@ -98,10 +98,12 @@ export function Footer() {
 
   return (
     <div className="w-full relative justify-center flex bg-white py-5">
-      <div className="w-10/12  flex flex-col items-center">
-        <div className="w-11/12 border-t-[1px] my-16 border-black"></div>
+      <div className="w-10/12 flex flex-col items-center">
+        {/* Top Border line */}
+        <div className="w-full border-t-[1px] my-20 border-black"></div>
+
         {/* Footer links | Stay connect */}
-        <div className="w-full flex justify-between items-start">
+        <div className="w-full flex justify-between pr-20 items-start">
           {/* Stay in touch | logo */}
           <div className="flex flex-col gap-10 justify-start items-start">
             {/* Logo | tagline */}
@@ -141,7 +143,7 @@ export function Footer() {
           </div>
 
           {/* Footer Links */}
-          <div className="flex  gap-24 mt-10 text-black">
+          <div className="flex  gap-24 mt-5 text-black">
             {footer.map((section, index) => (
               <div
                 key={index}
