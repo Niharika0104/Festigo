@@ -25,15 +25,15 @@ model Event {
 }
 
 model Guest_RSVP {
-  id         String @id @default(uuid())
+
   name       String
   email      String
-  phone      String @unique
+  phone      String 
   eventId    String
   rsvpStatus String @default("pending")
   event      Event  @relation(fields: [eventId], references: [id])
-
-  @@unique([phone, eventId])
+  
+  @@id(name:"guestId",[email, eventId])
 }
 
 model Users {
