@@ -8,8 +8,12 @@ import { Team } from "@/components/home-page/Team";
 import { Slogan } from "@/components/home-page/Slogan";
 
 export default function Home() {
+  
   return (
+
+
     <div className="">
+
       <HeroSection />
       <AboutUs />
       <Services />
@@ -17,6 +21,11 @@ export default function Home() {
       <Team />
       <Slogan />
       <Footer />
+
+
     </div>
   );
 }
+
+
+
