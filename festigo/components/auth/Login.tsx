@@ -53,9 +53,11 @@ export default function Login() {
   
       })
 
+      console.log(response);
+
       // console.log("response: ",response.data.statusbar );
 
-      if(response?.data.statusbar === 200){
+      if(response?.status === 200){
 
         toast.success("user logged in successfully");
 
