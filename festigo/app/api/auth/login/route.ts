@@ -1,78 +1,69 @@
-import client from "../../../db"
+import client from "../../../db";
 import bcrypt from 'bcrypt';
-import { Role,Authentication } from "@/Utils/Enums";
-
-
 import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken'
-
-import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import { NextRequest, NextResponse } from "next/server";
- dotenv.config();
+
+dotenv.config();
+
 interface User {
+    
     username: string;
     password: string;
-   email:string;
+    email: string;
 }
 
-    
-
-export  async function POST(req:NextRequest,res:NextResponse){
+export async function POST(req: NextRequest) {
     try {
         // Parse request body
         const userdata: User = await req.json();
-     
+
+        // Find user by username or email
         const user = await client.users.findFirst({
-            where: { 
-                OR:[
-                    { username: userdata.username }, 
-                    { email: userdata.email } 
+            where: {
+                OR: [
+                    { username: userdata.username },
+                    { email: userdata.email }
                 ]
-             }, 
-          });
-       if(user!=null){
+            },
+        });
 
-      
-        const hashedPassword: boolean = await bcrypt.compare(userdata.password, user.password);
-           if(hashedPassword){
-               const result={
-                   email:user.email,
-                   username:user.username,
-                   phonenumber:user.phoneNumber,
-                   role:user.role,
-                   authentication:user.authenticationType
-               }
-         // server.js
+        if (user) {
+            // Compare passwords
+            const isPasswordValid: boolean = await bcrypt.compare(userdata.password, user.password);
+            if (isPasswordValid) {
+                const result = {
+                    email: user.email,
+                    username: user.username,
+                    phonenumber: user.phoneNumber,
+                    role: user.role,
+                    authentication: user.authenticationType
+                };
 
-     const val:any=process.env.SECRET_KEY||undefined;
-    
-const token:string=jwt.sign(result,val);
-cookies().set(
-    "token",token,{
-        maxAge: 15*24 * 60 * 60 * 1000, 
-        httpOnly: true, 
-        secure: true 
-    }
-   
-  );
-  //res.send={message:result,status:200}
-           
-          return      NextResponse.json({data:result,status:200} );
-           }else{
-            return    NextResponse.json({message:"incorrect password",status:401})
-           }
-       }
-      
-        return NextResponse.json({message:"user doesnot exists",status:400})
-       
- 
-      
-  
-    } catch (error) {
-        console.error("Error creating user:", error);
+                const secretKey: string = process.env.SECRET_KEY || "";
+                const token: string = jwt.sign(result, secretKey, { expiresIn: '15d' });
 
-        // Send error response with appropriate status code
-        return NextResponse.json({message:"Internal server error",status:500})
-     
+                cookies().set("token", token, {
+                    maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
+                    httpOnly: true,
+                    secure: true
+                });
+
+                return NextResponse.json({ data: result, status: 200 });
+            } else {
+                return NextResponse.json({ message: "Incorrect password", status: 401 });
+            }
+        } else {
+            return NextResponse.json({ message: "User does not exist", status: 400 });
+        }
+
+    } catch (error:any) {
+        console.error("Error processing request:", error);
+        return NextResponse.json({ message: "Internal server error", status: 500 });
     }
 }
+
+
+
+
