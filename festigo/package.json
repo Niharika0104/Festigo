@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
+    "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
     "@types/dotenv": "^8.2.0",
     "bcrypt": "^5.1.1",
     "font": "^0.0.4",

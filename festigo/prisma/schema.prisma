@@ -135,3 +135,6 @@ model ChannelMessage {
   isEdited  Boolean  @default(false)
   channel   Channel  @relation(fields: [channelId], references: [id])
 }
+
+
+
