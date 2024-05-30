@@ -7,20 +7,23 @@ import { MdOutlineEmojiTransportation } from "react-icons/md";
 
 export const TransportorData = [
     {
-        title: "Bus",
+        title: "Caterers",
         date:"25 June 2024",
-        icon: <FaBus className="text-[#4318FF]"/>,
+        icon: <FaBus />,
+        color:"#4318FF"
     },
     {
-        title: "Vendors",
+        title: "Flower Decorator",
         date:"25 June 2024",
-        icon: <IoFlowerOutline className="text-[#4318FF]"/>,
+        icon: <IoFlowerOutline />,
+        color:"#01B574"
     },
     {
 
-        title: "Vendors",
+        title: "Public Transport",
         date:"25 June 2024",
-        icon: <MdOutlineEmojiTransportation className="text-[#4318FF]"/>,
+        icon: <MdOutlineEmojiTransportation />,
+        color:"#FFB547"
         
     }
 ];

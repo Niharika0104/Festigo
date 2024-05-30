@@ -13,6 +13,8 @@ import Payouts from "@/public/assests/icons/Payouts.png";
 
 import Guest from "@/public/assests/icons/guest.png";
 
+import Shedule from "@/public/assests/icons/shedule.png";
+
 import Image from "next/image";
 
 export const SideBarData = [
@@ -36,8 +38,7 @@ export const SideBarData = [
     },
     {
         title: "Schedules",
-        // Add the appropriate icon if you have one
-        icon: null,
+        icon: <Image src={Shedule} alt="Bookings" />,
         link:"/dashboard/calendar"
     },
     {
