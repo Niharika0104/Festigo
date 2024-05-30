@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import NiharikaImg from "/public/assets/images/niharika.jpg";
 import rohan from "/public/assets/images/rohan.jpg";
+import rohan_logo from "/public/assets/images/rohan-logo.png";
 import himanshu from "/public/assets/images/himanshu.jpg";
 import adarsh from "/public/assets/images/adarsh.jpg";
 import shape1 from "/public/assets/images/team-purple-shape.png";
@@ -17,9 +18,10 @@ type CardProps = {
   description: string;
   image: StaticImageData;
   bg: StaticImageData;
+  logo: StaticImageData;
 };
 
-const team = [
+const team: CardProps[] = [
   {
     name: "Niharika Goulikar",
     role: "Frontend & Backend Dev",
@@ -27,6 +29,7 @@ const team = [
       "A full stack developer equipped in both .NET technologies and the MERN stack. I graduated in the year 2023 and I'm working in Zelis as an Associate Software Engineer with 9 months of experience. I'm currently learning about  system design and DevOps.",
     image: NiharikaImg,
     bg: NiharikaImg,
+    logo: rohan_logo,
   },
   {
     name: "Himanshu Jain",
@@ -35,6 +38,7 @@ const team = [
       "I'm a 3rd year undergrad in engineering. I'm a full stack developer with a bit of DevOps knowledge, currently interning as a frontend developer and exploring open source. I'm also currently learning Web3 and always eager to grow and learn more!",
     image: himanshu,
     bg: himanshu,
+    logo: rohan_logo,
   },
   {
     name: "Adarsh Jain",
@@ -43,6 +47,7 @@ const team = [
       "I am a full stack developer with 1 year of experience in designing and implementing web applications using the MERN stack (MongoDB, Express, React, Node.js). I build scalable, high-performance applications that solve real-world problems, delivering comprehensive solutions from user interfaces to server-side logic.",
     image: adarsh,
     bg: adarsh,
+    logo: rohan_logo,
   },
   {
     name: "Rohan Sharma",
@@ -51,10 +56,11 @@ const team = [
       "A 2nd year undergrad of an engineering college, armed with some long lasting visionary skills. ‘Dominated many open-source competitions, as well as, slashed a few hackathons. But, still I’m in the process of learning, as of now, I’m good at nothing.",
     image: rohan,
     bg: rohan,
+    logo: rohan_logo,
   },
 ];
 
-function Card({ image, name, role, description, bg }: CardProps) {
+function Card({ image, name, role, description, bg, logo }: CardProps) {
   const [showCard, setShowCard] = useState(false);
   return (
     <>
@@ -109,7 +115,9 @@ function Card({ image, name, role, description, bg }: CardProps) {
             className="absolute bottom-0 right-0"
           >
             <div className="bg-[#FF0000] w-[90px] h-[90px] flex justify-center items-center rounded-full">
-              <div className="h-[60px] w-[60px] rounded-full bg-[#D9D9D9]"></div>
+              <div className="h-[60px] w-[60px] relative rounded-full bg-[white]">
+                <Image src={logo} alt="logo" fill />
+              </div>
             </div>
           </button>
         </div>
@@ -134,14 +142,14 @@ export function Team() {
   return (
     <div className="bg-white relative flex-col w-full py-40 justify-center items-center flex">
       {/* Three polygon triangle */}
-      <div className="w-[500px] h-[380px] relative">
+      <div className="w-[500px] top-20 h-[380px] relative">
         <Image src={shape1} alt="shape-1" fill />
       </div>
 
       {/* Triangle */}
       <div className="w-full absolute flex justify-center items-center">
         {/* Three polygon triangle */}
-        <div className="w-[80%] h-[120vh] top-[25%] absolute">
+        <div className="w-[80%] h-[120vh] top-[27%] absolute">
           <Image src={shape2} alt="shape-1" fill />
         </div>
 
@@ -152,13 +160,21 @@ export function Team() {
       </div>
 
       {/* left polygon shape */}
-      <div className="absolute left-20 bottom-[15%] h-[400px] w-[400px]">
+      <div className="absolute  left-20 bottom-[15%] h-[400px] w-[400px]">
         <Image src={leftShape} fill alt="left-Shape" />
       </div>
 
       {/* right polygon shape */}
       <div className="absolute right-20 bottom-[15%] h-[400px] w-[450px]">
         <Image src={rightShape} fill alt="left-Shape" />
+      </div>
+
+      {/* Heading */}
+      <div>
+        <p className="text-7xl font-bold">
+          <span className="text-[#FF0000]">Greet</span> the{" "}
+          <span className="text-[#FF0000]">Team</span>
+        </p>
       </div>
 
       {/* Cards */}
@@ -172,6 +188,7 @@ export function Team() {
               role={user.role}
               bg={user?.bg}
               description={user.description}
+              logo={user.logo}
             />
           );
         })}

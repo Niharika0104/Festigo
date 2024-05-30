@@ -72,13 +72,14 @@ export function Services() {
       <div className="absolute w-full top-10 h-[110vh]">
         <Image src={serviceBg} alt="image" fill />
       </div>
+
       {/* Our services heading */}
-      <div>
+      <div className="z-20">
         <p className="text-[#FF0000] text-2xl">Our Services</p>
       </div>
 
       {/* Subtitle text */}
-      <div>
+      <div className="z-20">
         <p className="text-black text-5xl">Who can avail FESTIGO???</p>
       </div>
 

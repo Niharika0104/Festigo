@@ -1,4 +1,3 @@
-
 import DashBoard from "@/components/pages/DashBoard"
 
 export default function DashBoardComponent() {
@@ -13,9 +12,5 @@ export default function DashBoardComponent() {
         </div>
     )
 }
-
-
-
-
 
 

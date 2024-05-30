@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import logo from "/public/assets/images/main-logo.png";
+import arrow from "/public/assets/gifs/topArrow.gif";
 import instagram from "/public/assets/images/instagram.png";
 import twitter from "/public/assets/images/twitter.png";
 import linkedin from "/public/assets/images/linkedin.png";
@@ -86,12 +89,21 @@ const footer = [
 ];
 
 export function Footer() {
+  function ArrowHandler() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
-    <div className="w-full justify-center flex bg-white py-5">
-      <div className="w-11/12 flex flex-col items-center">
-        <div className="w-11/12 border-t-[1px] border-black my-7"></div>
+    <div className="w-full relative justify-center flex bg-white py-5">
+      <div className="w-10/12 flex flex-col items-center">
+        {/* Top Border line */}
+        <div className="w-full border-t-[1px] my-20 border-black"></div>
+
         {/* Footer links | Stay connect */}
-        <div className="w-full flex justify-between items-start">
+        <div className="w-full flex justify-between pr-20 items-start">
           {/* Stay in touch | logo */}
           <div className="flex flex-col gap-10 justify-start items-start">
             {/* Logo | tagline */}
@@ -131,7 +143,7 @@ export function Footer() {
           </div>
 
           {/* Footer Links */}
-          <div className="flex  gap-24 mt-10 text-black">
+          <div className="flex  gap-24 mt-5 text-black">
             {footer.map((section, index) => (
               <div
                 key={index}
@@ -164,6 +176,13 @@ export function Footer() {
               All rights reserved © 2024- Festigo.co
             </p>
           </div>
+        </div>
+
+        {/* Arrow */}
+        <div className="absolute bottom-16 right-10">
+          <button className="w-[75px] h-[70px] relative" onClick={ArrowHandler}>
+            <Image src={arrow} alt="arrow" fill />
+          </button>
         </div>
       </div>
     </div>

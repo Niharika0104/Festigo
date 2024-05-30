@@ -3,8 +3,9 @@ import React from "react";
 type ButtonProps = {
   children: React.ReactNode;
   css: string;
-  onClick: () => void;
+  clickHandler: () => void;
 };
+
 
 export function Button({ children, css, onClick }: ButtonProps) {
   return (
