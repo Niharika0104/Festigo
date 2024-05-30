@@ -28,7 +28,7 @@ export const SideBarData = [
     {
         title: "Chatroom",
         icon: <IoLogoWechat size={22}/>,
-        link:"/dashboard/chatroom"
+        link:"/chatroom"
       
 
     },
@@ -41,7 +41,7 @@ export const SideBarData = [
         title: "Schedules",
         // Add the appropriate icon if you have one
         icon: null,
-        link:"/dashboard/calendar"
+        link:"/calender"
     },
     {
         title: "Guests",
@@ -54,7 +54,7 @@ export const SideBarData = [
     {
         title: "Payouts",
         icon: <Image src={Payouts} alt="Payouts" />,
-        link:"/dashboard/payouts"
+        link:"/payouts"
     },
     {
         title: "Settings",
