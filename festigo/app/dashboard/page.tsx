@@ -1,5 +1,5 @@
 
-import DashBoard from "@/components/dashboard/page"
+import DashBoard from "@/components/dashboard/Dashboard"
 
 export default function DashBoardComponent() {
 

@@ -17,7 +17,6 @@ import curve from "@/public/assests/icons/curve.png";
 
 export default function DashBoard() {
 
-    const [textData, setTextData] = useState({ text: "" });
 
     const data = [
         {
@@ -49,11 +48,6 @@ export default function DashBoard() {
         },
     ];
 
-    function changeHandler(event: any) {
-
-        setTextData({ text: event.target.value });
-
-    }
 
     return (
 
@@ -64,50 +58,15 @@ export default function DashBoard() {
 
                 <div className="w-full min-h-screen flex flex-col pr-5 overflow-hidden ">
 
-                    {/* section 1  */}
-
-                    <div className="relative w-full flex justify-between items-baseline mt-3">
-
-                        <div className="flex flex-col pl-4">
-
-                            <p className="text-[#707EAE]">Hii Radhika, </p>
-
-                            <h1 className="text-[#2B3674] text-3xl font-bold">
-
-                                Welcome to Festigo!
-
-                            </h1>
-
-                        </div>
-
-                        <div className="flex gap-6 justify-center items-center">
-
-                            <div className="w-[350px]">
-                                <InputField
-                                    type="text"
-                                    placeholder="Enter Text to Search"
-                                    value={textData.text}
-                                    name="text"
-                                    onChange={changeHandler}
-                                    required={false}
-                                    icon={<CiSearch />}
-                                ></InputField>
-                            </div>
-                            <div>
-                                <PiUserCircleDuotone size={50} />
-                            </div>
-                        </div>
-                    </div>
-
 
                     {/* section 2  */}
 
                     <div className="flex justify-between mt-3 gap-4 px-3">
 
-                        {/* spent this month  */}
+                        {/* spend this month  */}
 
 
-                        <div className="flex gap-5 bg-white p-3 py-5 rounded-lg w-fit ">
+                        <div className="flex gap-5 bg-white p-3 py-6 rounded-2xl w-fit px-6 pr-14 ml-6 ">
 
                             <div className="flex flex-col gap-2">
 
@@ -123,8 +82,8 @@ export default function DashBoard() {
 
                                     <div key={idx} className="flex flex-col rounded-full">
 
-                                        <div className="w-2 h-3 bg-[#E9EDF7] rounded-t-full"></div>
-                                        <div className="w-2 h-10 bg-[#FF0303] rounded-full"></div>
+                                        <div className=" w-[5.33px] h-[10px] bg-[#E9EDF7] rounded-t-full"></div>
+                                        <div className="w-[5.33px] h-[35px] bg-[#FF0303] rounded-full"></div>
 
                                     </div>
                                 ))}
@@ -136,24 +95,25 @@ export default function DashBoard() {
                         {/* Guest 321  */}
 
 
-                        <div className="flex flex-row items-center gap-4 bg-white w-[200px] px-4 rounded-lg">
+                        <div className="flex flex-row items-center gap-4 bg-white w-fit px-8 py-3 rounded-lg pr-[6rem]">
+                            
+                            
+                            <div className="w-[56px] h-[56px] p-2 rounded-full bg-red-500 flex justify-center items-center">
 
-                            <div className="w-[40px] h-[40px] p-2 rounded-full bg-red-500 flex justify-center items-center">
-
-                                <PiUsersDuotone size={40} className="text-white" />
+                                <PiUsersDuotone size={28} className="text-white" />
 
                             </div>
 
                             <div className="flex gap-1 flex-col ">
 
                                 <p className="text-[#A3AED0]">Guests</p>
-                                <p className="text-[#1B2559]">321</p>
+                                <p className="text-[#1B2559] text-[18px]">321</p>
 
                             </div>
 
-                            <div>
+                            <div className="flex w-[58px] h-[28px]">
 
-                                <Image src={curve} alt="curve " className="w-[58px] h-[28px]"></Image>
+                                <Image src={curve} alt="curve " className="w-full h-full bg-cover"></Image>
 
 
                             </div>
@@ -164,11 +124,11 @@ export default function DashBoard() {
 
                         {/* Schedule an Event  */}
 
-                        <div className="flex justify-center gap-3 px-4 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl">
+                        <div className="flex justify-center gap-3 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl px-9">
 
-                            <p className="text-[#E9EDF7]">Schedule an Event</p>
+                            <p className="text-[#E9EDF7] text-[16px] w-[117px] text-wrap">Schedule an Event</p>
 
-                            <Image src={PlusIcon} alt="plus" className="w-[40px] h-[40px]" />
+                            <Image src={PlusIcon} alt="plus" className="w-[90px] h-[90px]" />
 
                         </div>
 
@@ -180,40 +140,41 @@ export default function DashBoard() {
                     <div className="flex gap-4 justify-between ">
 
                         {/* 3.1 */}
-                        
+
                         <div className="flex flex-col gap-2 mt-4 pl-4">
 
 
                             {/* spent this month  */}
 
-                            <div className="flex flex-col gap-3 bg-white p-6 w-fit h-fit rounded-xl">
+                            <div className="flex flex-col gap-3 bg-white p-3 px-4  rounded-xl pr-9">
 
                                 <div className="flex flex-col gap-2">
 
                                     <p className="text-[#A3AED0]">Spent this month</p>
-                                    <p className="text-[#1B2559] font-bold">$682.5</p>
+                                    <p className="text-[#1B2559] font-bold text-[34px]">$682.5</p>
                                     <p className="text-[#05CD99] text-sm font-semibold">On track</p>
 
                                 </div>
-                                <div className="flex gap-5">
+                                <div className="flex gap-7">
                                     {[...Array(7)].map((_, idx) => (
-                                        <div key={idx} className="flex flex-col rounded-full">
-                                            <div className="w-3 h-12 bg-[#E9EDF7] rounded-t-full"></div>
-                                            <div className="w-3 h-16 bg-[#FF0303] rounded-full"></div>
+                                        <div key={idx} className="flex flex-col items-center">
+                                            <div className="h-[40px] bg-[#E9EDF7] rounded-t-full w-[13px]"></div>
+                                            <div className="h-[80px] bg-[#FF0303] rounded-full w-[13px]"></div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
+
                             {/* Your Transactions  */}
 
-                            <div className="flex flex-col bg-white w-fit p-1 rounded-xl pr-9">
+                            <div className="flex flex-col bg-white w-fit p-1 rounded-xl px-8 pr-12">
 
                                 <div>
-                                    <h1 className="text-[#1B2559] text-xl font-bold pl-3 py-2">Your transactions</h1>
+                                    <h1 className="text-[#1B2559] text-xl font-bold  py-2 text-[20px]">Your transactions</h1>
                                 </div>
 
-                                <div className="flex flex-col gap-3 p-2">
+                                <div className="flex flex-col gap-3">
                                     {
 
                                         TransportorData.map((data, index) => (
@@ -229,7 +190,7 @@ export default function DashBoard() {
 
                                                 <div className="flex flex-col">
 
-                                                    <h1 className="text-[#1B2559]">{data.title}</h1>
+                                                    <h1 className="text-[#1B2559] font-bold text-[16px]">{data.title}</h1>
                                                     <p className="text-[#A3AED0] text-xs">{data.date}</p>
 
                                                 </div>
@@ -252,10 +213,10 @@ export default function DashBoard() {
                             {/* designer wedding ,guest  */}
 
 
-                            <div className="flex flex-col gap-3 h-fit bg-white p-5 rounded-xl w-fit ">
+                            <div className="flex flex-col gap-3 h-fit bg-white p-5 rounded-xl w-fit px-10 ">
 
                                 <div>
-                                    <h1 className="text-[#1B2559] text-2xl font-bold">27 May</h1>
+                                    <h1 className="text-[#1B2559] text-[34px] font-bold">27 May</h1>
                                 </div>
                                 <div className="flex flex-col gap-6">
 
@@ -269,8 +230,8 @@ export default function DashBoard() {
 
                                                 <div className="flex flex-col">
 
-                                                    <p className="text-[#1B2559]">{item.title}</p>
-                                                    <p className="text-[#A3AED0] text-xs">{item.timing}</p>
+                                                    <p className="text-[#1B2559] text-[16px]">{item.title}</p>
+                                                    <p className="text-[#A3AED0] text-[12px]">{item.timing}</p>
 
                                                 </div>
 
@@ -281,7 +242,7 @@ export default function DashBoard() {
 
                                 </div>
 
-                                <div className="flex gap-2 items-center pl-12">
+                                <div className="flex gap-2 items-center pl-24">
 
                                     <p className="text-[#FF1818] font-bold">View all Tasks</p>
                                     <FaArrowRightLong className="text-[#FF1818]" />
@@ -293,7 +254,7 @@ export default function DashBoard() {
                             {/* Featured venue  */}
 
 
-                            <div className="flex flex-col bg-white p-5 rounded-xl w-fit h-fit gap-3 mt-3 ">
+                            <div className="flex flex-col bg-white p-5 rounded-xl w-fit h-fit gap-3 mt-1 pr-8 ">
 
                                 <h1 className="text-[#1B2559] font-bold text-xl">Featured Venues</h1>
 
@@ -321,21 +282,21 @@ export default function DashBoard() {
                             {/* Radhika sharma  */}
 
 
-                            <div className="relative flex flex-col gap-2 bg-white justify-center items-center p-6 rounded-xl">
+                            <div className="relative flex flex-col gap-2 bg-white justify-center items-center p-6 rounded-xl px-12">
 
                                 <div className="relative w-[120px] h-[120px] rounded-full bg-[#F6F8FD] flex justify-center items-center">
                                     <Image src={UserImage} alt="user image" className="w-full h-full bg-cover" />
                                 </div>
-                                <p className="text-2xl text-[#1B2559] font-bold">Radhika Sharma</p>
+                                <p className="text-[24px] text-[#1B2559] font-bold ">Radhika Sharma</p>
                                 <div className="flex justify-center items-center">
                                     <CiLocationOn className="text-[#A3AED0]" />
-                                    <p className="text-[#A3AED0] text-sm">Kanpur, UP, USA</p>
+                                    <p className="text-[#A3AED0] text-[14px]">Kanpur, UP, USA</p>
                                 </div>
                                 <div className="flex justify-between gap-4 mt-6">
                                     {eventData.map((data, index) => (
                                         <div key={index} className="flex flex-col gap-3 justify-center items-center">
-                                            <p className="text-[#A3AED0]">{data.title}</p>
-                                            <p className="text-[#1B2559] font-bold text-2xl">{data.total}</p>
+                                            <p className="text-[#A3AED0] text-[12px]">{data.title}</p>
+                                            <p className="text-[#1B2559] font-bold text-[24px]">{data.total}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -349,11 +310,11 @@ export default function DashBoard() {
 
                                 <div className="flex justify-end">
 
-                                    <p className="text-[#D0A3A3]"> Open chat </p>
+                                    <p className="text-[#D0A3A3] text-[14px]"> Open chat </p>
 
                                 </div>
 
-                                <div className="flex gap-4 justify-center items-center">
+                                <div className="flex gap-4 justify-center items-center px-4 py-3 rounded-lg">
 
                                     <div className="w-[56px] h-[56px] border border-[#08A604] flex justify-center items-center rounded-full">
 
@@ -363,9 +324,9 @@ export default function DashBoard() {
 
                                     <div>
 
-                                        <p className="text-[#A3AED0]">Radhika ki Sautan:</p>
+                                        <p className="text-[#A3AED0] text-[14px]">Radhika ki Sautan:</p>
 
-                                        <p className="text-[#1B2559] font-bold">Uss churail ko kisne bulaya?</p>
+                                        <p className="text-[#1B2559] font-bold text-[15px]">Uss churail ko kisne bulaya?</p>
 
                                     </div>
 
@@ -382,7 +343,6 @@ export default function DashBoard() {
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -390,7 +350,6 @@ export default function DashBoard() {
         </div>
     );
 }
-
 
 
 

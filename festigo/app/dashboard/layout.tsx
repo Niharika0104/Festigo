@@ -11,18 +11,24 @@ import { CiLocationOn } from "react-icons/ci";
 import MessageIcon from "@/public/assests/icons/messageIcon.png";
 import Image from "next/image";
 
+import TopBar from "@/components/common/Topbar";
+
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen overflow-hidden bg-[#FEF4F4]">
-      <div className="bg-white w-1/6 h-screen sticky top-0 overflow-hidden ">
+    <div className="flex min-h-screen bg-[#FEF4F4]">
+      <div className="bg-white w-1/6 h-screen fixed top-0 left-0">
         <Sidebar />
       </div>
-      <div className="w-5/6 ">
+      <div className="w-5/6 ml-auto h-screen overflow-y-hidden flex flex-col">
+
+        <TopBar></TopBar>
+
         {children}
+
       </div>
     </div>
   );
