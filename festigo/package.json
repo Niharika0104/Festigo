@@ -12,6 +12,7 @@
     "@devexpress/dx-react-core": "^4.0.8",
     "@devexpress/dx-react-scheduler": "^4.0.8",
     "@devexpress/dx-react-scheduler-material-ui": "^4.0.8",
+    "@headlessui/react": "^2.0.4",
     "@prisma/client": "^5.14.0",
     "@types/dotenv": "^8.2.0",
     "axios": "^1.7.2",

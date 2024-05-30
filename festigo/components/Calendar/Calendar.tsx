@@ -103,10 +103,10 @@ const schedulerData :Array<AppointmentModel>= [
   };
   
   return (
-    <div className=''>
+    <div className=' w-full'>
     
     <Scheduler 
-      data={schedulerData}  > 
+      data={schedulerData} rootComponent={}> 
    
       <ViewState
         currentDate={currentDate}

@@ -24,11 +24,11 @@ export default function Layout({
     return (
       <>
    
-   <div className="grid grid-cols-6 ">
-    <div className="bg-white "> {/* Sidebar takes up 5/12 of the width */}
+   <div className="grid grid-cols-12 ">
+    <div className="bg-white  fixed bottom-0">
         <Sidebar />
     </div>
-    <div className="col-span-5 "> {/* Children take up 7/12 of the width */}
+    <div className="col-span-12 pl-[300px]  "> 
         {children}
     </div>
 </div>
