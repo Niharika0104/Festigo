@@ -29,7 +29,10 @@ export const SideBarData = [
     },
     {
         title: "Chatroom",
-        icon: <IoLogoWechat size={22}/>
+        icon: <IoLogoWechat size={22}/>,
+        link:"/chatroom"
+      
+
     },
     {
         title: "Bookings",
@@ -40,6 +43,7 @@ export const SideBarData = [
         title: "Schedules",
         icon: <Image src={Shedule} alt="Bookings" />,
         link:"/dashboard/calendar"
+
     },
     {
         title: "Guests",
@@ -51,7 +55,8 @@ export const SideBarData = [
     },
     {
         title: "Payouts",
-        icon: <Image src={Payouts} alt="Payouts" />
+        icon: <Image src={Payouts} alt="Payouts" />,
+        link:"/payouts"
     },
     {
         title: "Settings",

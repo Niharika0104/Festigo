@@ -120,8 +120,6 @@ export default function DashBoard() {
 
                         </div>
 
-
-
                         {/* Schedule an Event  */}
 
                         <div className="flex justify-center gap-3 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl px-9">
@@ -350,7 +348,6 @@ export default function DashBoard() {
         </div>
     );
 }
-
 
 
 
