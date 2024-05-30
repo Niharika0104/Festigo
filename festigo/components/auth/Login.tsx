@@ -18,6 +18,8 @@ import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
 
+import FestigoLogo from "@/public/assests/icons/FestigoLogo.png";
+
 export default function Login() {
 
   const router = useRouter();
@@ -46,7 +48,7 @@ export default function Login() {
 
     try{
 
-      const response = await axios.post("/api/auth/login", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
   
         email: userData.email,
         password: userData.password,
@@ -61,7 +63,7 @@ export default function Login() {
 
         toast.success("user logged in successfully");
 
-        router.push("/");
+        router.push("/dashboard");
 
 
       }else{
@@ -112,11 +114,13 @@ export default function Login() {
       <div className="relative z-10 flex flex-col gap-12 justify-center items-center w-full h-full">
 
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4 justify-center items-center">
 
-          <h1 className="font-bold text-red-600 uppercase text-center text-4xl">Festigo</h1>
+          {/* <h1 className="font-bold text-red-600 uppercase text-center text-4xl">Festigo</h1> */}
 
-          <p className="text-neutral-600 text-3xl">" Simplyfying Your Event Planning Journey "</p>
+          <Image src={FestigoLogo} alt="Festigo " className=" w-[200px] sm:w-[300px] mix-blend-multiply"/>
+
+          <p className="text-neutral-600 text-lg sm:text-3xl ">" Simplyfying Your Event Planning Journey "</p>
 
         </div>
 

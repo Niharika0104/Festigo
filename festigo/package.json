@@ -19,6 +19,7 @@
     "bcrypt": "^5.1.1",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
+    "DatePicker": "^2.0.0",
     "dotenv": "^16.4.5",
     "font": "^0.0.4",
     "jsonwebtoken": "^9.0.2",

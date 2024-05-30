@@ -28,6 +28,8 @@ import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
 
+import FestigoLogo from "@/public/assests/icons/FestigoLogo.png";
+
 
 interface User {
 
@@ -68,7 +70,7 @@ export default function Signup() {
 
         try {
 
-            const response = await axios.post("/api/auth/register", {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`, {
 
                 username: userData.firstName + " " + userData.lastName,
                 email: userData.email,
@@ -130,7 +132,9 @@ export default function Signup() {
 
                 <div className="flex flex-col gap-2">
 
-                    <h1 className="font-bold text-red-600 uppercase text-center text-4xl">Festigo</h1>
+                    {/* <h1 className="font-bold text-red-600 uppercase text-center text-4xl">Festigo</h1> */}
+                    
+                    <Image src={FestigoLogo} alt="Festigo " className=" w-[200px]  sm:w-[300px] mix-blend-multiply"/>
 
                     {/* <p className="text-neutral-600 text-3xl">" Simplyfying Your Event Planning Journey "</p> */}
 
