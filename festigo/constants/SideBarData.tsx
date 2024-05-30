@@ -19,6 +19,7 @@ export const SideBarData = [
     {
         title: "Dashboard",
         icon: <MdOutlineDashboard size={22}/>,
+        link:"/dashboard"
     },
     {
         title: "Vendors",
@@ -26,7 +27,10 @@ export const SideBarData = [
     },
     {
         title: "Chatroom",
-        icon: <IoLogoWechat size={22}/>
+        icon: <IoLogoWechat size={22}/>,
+        link:"/dashboard/chatroom"
+      
+
     },
     {
         title: "Bookings",
@@ -36,7 +40,8 @@ export const SideBarData = [
     {
         title: "Schedules",
         // Add the appropriate icon if you have one
-        icon: null
+        icon: null,
+        link:"/dashboard/calendar"
     },
     {
         title: "Guests",
@@ -48,7 +53,8 @@ export const SideBarData = [
     },
     {
         title: "Payouts",
-        icon: <Image src={Payouts} alt="Payouts" />
+        icon: <Image src={Payouts} alt="Payouts" />,
+        link:"/dashboard/payouts"
     },
     {
         title: "Settings",
