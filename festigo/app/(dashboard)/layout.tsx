@@ -28,7 +28,7 @@ export default function Layout({
     <div className="bg-white  fixed bottom-0">
         <Sidebar />
     </div>
-    <div className="col-span-12 pl-[300px]  "> 
+    <div className="col-span-12 pl-[300px]  bg-[#FEF4F4]"> 
         {children}
     </div>
 </div>
