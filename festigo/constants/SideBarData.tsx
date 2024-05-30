@@ -19,6 +19,7 @@ export const SideBarData = [
     {
         title: "Dashboard",
         icon: <MdOutlineDashboard size={22}/>,
+        link:"/dashboard"
     },
     {
         title: "Vendors",
@@ -36,7 +37,8 @@ export const SideBarData = [
     {
         title: "Schedules",
         // Add the appropriate icon if you have one
-        icon: null
+        icon: null,
+        link:"/dashboard/calendar"
     },
     {
         title: "Guests",

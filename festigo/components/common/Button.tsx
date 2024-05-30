@@ -3,9 +3,8 @@ import React from "react";
 type ButtonProps = {
   children: React.ReactNode;
   css: string;
-  clickHandler: () => void;
+  onClick: () => void;
 };
-
 
 export function Button({ children, css, onClick }: ButtonProps) {
   return (
@@ -14,6 +13,3 @@ export function Button({ children, css, onClick }: ButtonProps) {
     </button>
   );
 }
-
-
-

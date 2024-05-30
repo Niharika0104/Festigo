@@ -9,12 +9,14 @@ import { SideBarData } from "@/constants/SideBarData";
 
 import Image from "next/image";
 
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 export default function Sidebar() {
 
     const [currentState, setCurrentState] = useState(SideBarData[0].title);
-
+    const router= useRouter() ;
 
     return (
 
@@ -27,7 +29,7 @@ export default function Sidebar() {
 
             <div className=" relative flex flex-col w-[250px] gap-4">
 
-                <div className="relative flex items-center gap-3 p-5 shadow-md">
+                <div className="relative flex items-center gap-3 p-5 shadow-md ">
 
                     {/* logo image   7 7 */}
 
@@ -75,7 +77,7 @@ export default function Sidebar() {
 
                           ${data.title === currentState ? "bg-[#FF0909] text-white font-semibold" : "bg-white text-gray-700 hover:bg-gray-100"}`}
                             key={index}
-                            onClick={() => setCurrentState(data.title)}
+                            onClick={() => {setCurrentState(data.title);router.push(data.link??"/hello"); }}
                         >
                             <div className="w-6 h-6 flex justify-center items-center">
 
