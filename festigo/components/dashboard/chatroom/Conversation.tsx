@@ -73,6 +73,66 @@ const messages = [
     userId: 1,
     message: "Sukuna, hehehe",
   },
+  {
+    id: 678,
+    userId: 1,
+    message: "Hello",
+  },
+  {
+    id: 890,
+    userId: 2,
+    message: "Hello",
+  },
+  {
+    id: 345,
+    userId: 1,
+    message: "What's you name",
+  },
+  {
+    id: 67890,
+    userId: 2,
+    message: "Gojo",
+  },
+  {
+    id: 1234,
+    userId: 2,
+    message: "What's your?",
+  },
+  {
+    id: 3090,
+    userId: 1,
+    message: "Sukuna, hehehe",
+  },
+  {
+    id: 678,
+    userId: 1,
+    message: "Hello",
+  },
+  {
+    id: 890,
+    userId: 2,
+    message: "Hello",
+  },
+  {
+    id: 345,
+    userId: 1,
+    message: "What's you name",
+  },
+  {
+    id: 67890,
+    userId: 2,
+    message: "Gojo",
+  },
+  {
+    id: 1234,
+    userId: 2,
+    message: "What's your?",
+  },
+  {
+    id: 3090,
+    userId: 1,
+    message: "Sukuna, hehehe",
+  },
 ];
 
 export function Conversation() {
@@ -144,7 +204,7 @@ export function Conversation() {
           <>
             {conversationId ? (
               // If conversation id found
-              <div className="z-[100] w-full flex flex-col gap-2 h-full py-5 px-2">
+              <div className="z-[100] w-full overflow-y-auto scroll-smooth flex flex-col gap-2 h-full py-5 px-2">
                 {messages?.map((message) => {
                   return (
                     <div
