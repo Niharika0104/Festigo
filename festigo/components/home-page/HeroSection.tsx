@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 import { Button } from "../common/Button";
 import logoImage from "/public/assets/images/logo.png";
@@ -10,8 +9,6 @@ import arrow from "/public/assets/gifs/bottomArrow.gif";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 
-
-
 export function HeroSection() {
   const router = useRouter();
   function ArrowHandler() {
@@ -20,8 +17,6 @@ export function HeroSection() {
       behavior: "smooth",
     });
   }
-
-
 
   return (
     <div className="w-full bg-main-page-hero z-10 h-screen flex justify-center items-center relative">
@@ -71,25 +66,24 @@ export function HeroSection() {
         {/* sign-up | sign-in Buttons */}
         <div className="flex w-[500px] mt-24 justify-between items-center">
           {/* Sign-in button */}
-         
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" clickHandler={() => {
 
-
-            router.push('/auth/login')
-
-          }} >
+          <Button
+            css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16"
+            clickHandler={() => {
+              router.push("/auth/login");
+            }}
+          >
             Sign in
-
           </Button>
 
           {/* Sign-up button */}
-         
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" clickHandler={() => {
 
-
-            router.push('/auth/signup')
-
-          }}>
+          <Button
+            css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16"
+            clickHandler={() => {
+              router.push("/auth/signup");
+            }}
+          >
             Sign Up
           </Button>
         </div>
@@ -97,7 +91,3 @@ export function HeroSection() {
     </div>
   );
 }
-
-
-
-

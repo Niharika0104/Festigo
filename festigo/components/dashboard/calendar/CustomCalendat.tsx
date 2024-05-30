@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ResuableModal from '../common/Modal'
+import ResuableModal from '../../common/Modal'
 import { FaChevronLeft ,FaChevronRight} from "react-icons/fa6";
-import EventForm  from '../common/EventForm'
+import EventForm  from '../../common/EventForm'
 interface CustomCalendarProps {
   year: number;
 }

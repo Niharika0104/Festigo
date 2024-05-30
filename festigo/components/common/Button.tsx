@@ -6,7 +6,6 @@ type ButtonProps = {
   clickHandler: () => void;
 };
 
-
 export function Button({ children, css, clickHandler }: ButtonProps) {
   return (
     <button className={css} onClick={clickHandler}>
@@ -14,6 +13,3 @@ export function Button({ children, css, clickHandler }: ButtonProps) {
     </button>
   );
 }
-
-
-

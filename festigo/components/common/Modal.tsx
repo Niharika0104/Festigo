@@ -1,5 +1,11 @@
-import { useState } from 'react';
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
+import { useState } from "react";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 
 interface ModalProps {
   open: boolean;
@@ -10,7 +16,14 @@ interface ModalProps {
   onSubmit?: () => void;
 }
 
-const ReusableModal: React.FC<ModalProps> = ({ open, setOpen, title, content: Content, contentProps, onSubmit }) => {
+const ReusableModal: React.FC<ModalProps> = ({
+  open,
+  setOpen,
+  title,
+  content: Content,
+  contentProps,
+  onSubmit,
+}) => {
   return (
     <Transition show={open}>
       <Dialog className="relative z-10" onClose={setOpen}>
@@ -42,7 +55,10 @@ const ReusableModal: React.FC<ModalProps> = ({ open, setOpen, title, content: Co
                       {/* You can add any icon or content here */}
                     </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <DialogTitle as="h3" className="text-red-400 text-lg font-semibold leading-6 ">
+                      <DialogTitle
+                        as="h3"
+                        className="text-red-400 text-lg font-semibold leading-6 "
+                      >
                         {title}
                       </DialogTitle>
                       <div className="mt-2">
@@ -52,7 +68,6 @@ const ReusableModal: React.FC<ModalProps> = ({ open, setOpen, title, content: Co
                     </div>
                   </div>
                 </div>
-               
               </DialogPanel>
             </TransitionChild>
           </div>
