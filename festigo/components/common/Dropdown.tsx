@@ -49,7 +49,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ options,value, onSelect }) 
 
       {isOpen && (
         <div
-          className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute right-0 z-10 mt-2 w-auto origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -62,7 +62,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ options,value, onSelect }) 
                 key={index}
                 className={`${
                   selected === option ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                } block px-5 py-2 text-sm`}
+                } block px-5 py-2 text-sm w-auto`}
                 role="menuitem"
                 tabIndex={-1}
                 onClick={() => handleSelect(option)}

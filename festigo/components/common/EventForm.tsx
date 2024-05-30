@@ -7,6 +7,7 @@ const YourComponent = (props:any) => {
   console.log(props)
   console.log("object")
   const options=["Wedding","Birthday","Lunch Party","Dance party"]
+  const venueOptions=["Central hall","Daisy hall","lotus banquet hall","Park hall"]
   const [eventType,setEventType]=useState(props?.eventType||"");
   const [venue,setVenue]=useState(props?.venue||"");
   const [toTime,settoTime]=useState("");
@@ -80,7 +81,7 @@ const handleFromTimeChange=(value:string)=>{
       <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
           Venue 
         </label>
-       <DropdownMenu options={options} onSelect={handleVenueSelect} value={venue||""}/>
+       <DropdownMenu options={venueOptions} onSelect={handleVenueSelect} value={venue||""}/>
        
       </div>
       </div>
@@ -120,7 +121,7 @@ const handleFromTimeChange=(value:string)=>{
         <label htmlFor="fromDuration" className="block text-gray-700 font-bold mb-2">
         From
         </label>
-        <TimePicker handleChange={handleFromTimeChange}/>
+        <TimePicker handleChange={handleFromTimeChange} value={props?.fromTime}/>
       </div>
 
    
@@ -128,7 +129,7 @@ const handleFromTimeChange=(value:string)=>{
         <label htmlFor="toDuration" className="block text-gray-700 font-bold mb-2">
         To
         </label>
-        <TimePicker handleChange={handleToTimeChange}/>
+        <TimePicker handleChange={handleToTimeChange} value={props?.toTime}/>
       </div>
 
 </div>
@@ -139,18 +140,18 @@ const handleFromTimeChange=(value:string)=>{
       
 
 
-      <div className="mb-4 justify-center flex gap-3">
+      <div className="mb-4 justify-center flex gap-3 mt-4">
       { props?.edit?
       <div>
          <button
       type="submit"
-      className="bg-[#e07777] mx-3 hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
    Delete
     </button>
     <button
       type="submit"
-      className="bg-[#e07777]  hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
    Save Changes
     </button>
@@ -160,7 +161,7 @@ const handleFromTimeChange=(value:string)=>{
       
       <button
       type="submit"
-      className="bg-[#e07777]  hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
    Submit
     </button>}

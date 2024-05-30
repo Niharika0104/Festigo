@@ -7,7 +7,11 @@ import webLogo from "/public/assets/images/main-logo.png";
 import Image from "next/image";
 import arrow from "/public/assets/gifs/bottomArrow.gif";
 
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+
+>>>>>>> 7735e4616d4cfe9a9634653888b76fcead86e71d
 
 export function HeroSection() {
   const router = useRouter();
@@ -18,6 +22,11 @@ export function HeroSection() {
     });
   }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7735e4616d4cfe9a9634653888b76fcead86e71d
   return (
     <div className="w-full bg-main-page-hero z-10 h-screen flex justify-center items-center relative">
       <div className=" w-full z-[-10] h-screen opacity-80  absolute bg-black"></div>
@@ -66,6 +75,7 @@ export function HeroSection() {
         {/* sign-up | sign-in Buttons */}
         <div className="flex w-[500px] mt-24 justify-between items-center">
           {/* Sign-in button */}
+<<<<<<< HEAD
 
           <Button
             css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16"
@@ -73,16 +83,35 @@ export function HeroSection() {
               router.push("/auth/login");
             }}
           >
+=======
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" clickHandler={() => {
+
+
+            router.push('/auth/login')
+
+          }} >
+>>>>>>> 7735e4616d4cfe9a9634653888b76fcead86e71d
             Sign in
           </Button>
 
           {/* Sign-up button */}
+<<<<<<< HEAD
           <Button
             css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16"
             onClick={() => {
               router.push("/auth/signup");
             }}
           >
+=======
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" clickHandler={() => {
+
+
+            router.push('/auth/signup')
+
+          }}>
+>>>>>>> 7735e4616d4cfe9a9634653888b76fcead86e71d
             Sign Up
           </Button>
         </div>
