@@ -6,6 +6,14 @@ type ButtonProps = {
   clickHandler: () => void;
 };
 
-export function Button({ children, css, clickHandler }: ButtonProps) {
-  return <button onClick={clickHandler} className={css}>{children}</button>;
+
+export function Button({ children, css, onClick }: ButtonProps) {
+  return (
+    <button className={css} onClick={onClick}>
+      {children}
+    </button>
+  );
 }
+
+
+

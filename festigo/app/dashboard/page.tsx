@@ -1,12 +1,16 @@
-import { Chatroom } from "@/components/dashboard/chatroom/Chatroom";
-import React from "react";
+import DashBoard from "@/components/pages/DashBoard"
 
-function Page() {
-  return (
-    <div className="w-full bg-[#FEF4F4]">
-      <Chatroom />
-    </div>
-  );
+export default function DashBoardComponent() {
+
+    return (
+
+
+        <div className="bg-white">
+
+            <DashBoard></DashBoard>
+
+        </div>
+    )
 }
 
-export default Page;
+
