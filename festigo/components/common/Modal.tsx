@@ -42,7 +42,7 @@ const ReusableModal: React.FC<ModalProps> = ({ open, setOpen, title, content: Co
                       {/* You can add any icon or content here */}
                     </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      <DialogTitle as="h3" className="text-red-400 text-lg font-semibold leading-6 ">
                         {title}
                       </DialogTitle>
                       <div className="mt-2">

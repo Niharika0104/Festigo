@@ -24,12 +24,7 @@ const monthsValue = [
 const getDaysInMonth = (month: number, year: number): number => {
   return new Date(year, month, 0).getDate();
 };
-function getRandomColor() {
-  const colors = ["red", "green", "yellow", "blue","purple"]; 
-  const randomIndex = Math.floor(Math.random() * colors.length); 
-  
-  return colors[randomIndex]; 
-}
+
 
 
 interface Event {
@@ -40,6 +35,8 @@ interface Event {
   endDate?: string; 
   venue?: string;
   edit?:boolean;
+  fromTime?:string;
+  toTime?:string;
 }
 const  groupByStartDate=(arr: Event[])=>{
   const result: { [key: string]: Event[] } = {};
@@ -60,10 +57,11 @@ const  groupByStartDate=(arr: Event[])=>{
 const organizedEvents: { [key: string]: Event[] } = {};
 
 const sampleEvents: Event[] = [
-  { date: '2024-05-15', title: 'Event 1', description: 'Description for Event 1', startDate: '2024-05-15', endDate: '2024-05-15', venue: 'Venue 1' },
-  { date: '2024-05-15', title: 'Event 1', description: 'Description for Event 1', startDate: '2024-05-15', endDate: '2024-05-15', venue: 'Venue 1' },
-  { date: '2024-05-22', title: 'Event 2', description: 'Description for Event 2', startDate: '2024-05-22', endDate: '2024-05-22', venue: 'Venue 2' },
-  { date: '2024-05-28', title: 'Event 3', description: 'Description for Event 3', startDate: '2024-05-28', endDate: '2024-05-28', venue: 'Venue 3' },
+  { date: '2024-05-15', title: 'Jazz\'s birthday', description: 'Description for Event 1', startDate: '2024-05-15', endDate: '2024-05-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm" },
+  { date: '2024-05-15', title: 'Harpreet\'s wedding', description: 'Description for Event 1', startDate: '2024-06-15', endDate: '2024-06-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm"  },
+  { date: '2024-05-22', title: 'Diane graduation party', description: 'Description for Event 2', startDate: '2024-06-22', endDate: '2024-06-22', venue: 'Venue 2',fromTime:"11:00am",toTime:"11:40pm"  },
+  { date: '2024-05-28', title: 'Mira\'s wedding', description: 'Description for Event 3', startDate: '2024-05-28', endDate: '2024-05-28', venue: 'Venue 3',fromTime:"11:00am",toTime:"11:40pm"  },
+
   // Add more events as needed
 ];
 
@@ -102,7 +100,7 @@ const getCurrentMonth = () => {
 
 
 const months = Array.from({ length: 12 }, (_, index) => index + 1); // Array of month numbers from 1 to 12
-const iconStyle = { color: "red", fontSize: "2.5em" }
+const iconStyle = { color: "red", fontSize: "2.5em",cursorStyle:"pointer"}
 
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ year }) => {
@@ -111,19 +109,24 @@ const [title,setTitle]=useState("Create an Event")
  const [modalOpen, setModalOpen] = useState(false);
  const [event,setEvent]=useState();
  const handleLeftClick=()=>{
-  setCurrentMonth(monthsValue[currentMonth.idx-1]);
+  setCurrentMonth(monthsValue[(currentMonth.idx-1)%12]);
 }
 const handleRightClick=()=>{
-  setCurrentMonth(monthsValue[currentMonth.idx+1]);
+  setCurrentMonth(monthsValue[(currentMonth.idx+1)%12]);
 }
-
+function getRandomColor():string {
+  const colors = ["red", "green", "yellow", "blue","purple"]; 
+  const randomIndex = Math.floor(Math.random() * (colors.length-1)); 
+  
+  return colors[randomIndex]; 
+}
 const OpenPopUp=(event?:any)=>{
   setModalOpen(true);
   if(event?.edit)setTitle("Edit your event")
   setEvent(event);
 }
 
-
+const dynamicClassName = `border border-dashed border-red-950 rounded-md m-2 bg-red-200 p-2 cursor-pointer`;
 const totalDays = getDaysInMonth(currentMonth.idx + 1, year);
 const firstDayOfWeek = getFirstDayOfWeek(currentMonth.idx + 1, year);
 const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
@@ -137,13 +140,14 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
         contentProps={event} 
         
       />
-    <div className="w-full h-screen flex flex-col my-4">
-  <div className='w-[200px] h-[100px] flex justify-evenly items-center'>
-    <FaChevronLeft style={iconStyle} onClick={handleLeftClick}/>
+    <div className="w-full h-full flex flex-col mb-9 relative">
+      <div className='abolute object-contain'>
+  <div className='w-[200px] h-[100px] flex justify-evenly items-center  '>
+    <FaChevronLeft style={{...iconStyle,cursor: 'pointer' }} onClick={handleLeftClick}  />
     <div className='text-lg'>{currentMonth.month}</div>
-    <FaChevronRight style={iconStyle} onClick={handleRightClick}/>
+    <FaChevronRight style={{...iconStyle,cursor: 'pointer' }} onClick={handleRightClick}/>
   </div>
-  
+  </div>
   <div className="grid grid-cols-7">
     {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => (
       <div key={index} className="p-2">{day}</div>
@@ -173,9 +177,12 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
 
 {groupByStartDate(sampleEvents)[`${(currentMonth.idx)+1}:${new String(day)}`]?.length>0?
 
-groupByStartDate(sampleEvents)[`${currentMonth.idx + 1}:${ new String(day)}`]?.map((item, key) => (<p key={key} className="border border-dashed border-red-950 rounded-md m-2 bg-blue-200 p-2 cursor-pointer"
+groupByStartDate(sampleEvents)[`${currentMonth.idx + 1}:${ new String(day)}`]?.map((item, key) => (<div>
+  {day+1}
+  <p key={key} className={dynamicClassName}
 onClick={()=>{OpenPopUp({...item,edit:true})}}
->{item?.title.slice(0,15)}</p>)) : <p className='cursor-pointer h-full' onClick={()=>{OpenPopUp({})}} >{day+1} </p> }
+>{item?.title.slice(0,15)}</p>
+</div>)) : <p className='cursor-pointer h-full' onClick={()=>{OpenPopUp({})}} >{day+1} </p> }
 </div>
     ))}
     {/* Fill dates of the next month in the last row */}
