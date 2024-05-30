@@ -5,6 +5,7 @@ import messageImg from "/public/assets/images/message.png";
 import { BsThreeDots } from "react-icons/bs";
 import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 
 export function Conversation() {
   const pathname = usePathname();
@@ -53,7 +54,12 @@ export function Conversation() {
           {/* Chat bg Image */}
           <div className="absolute z-0  w-full h-full">
             <div className="relative w-full h-full">
-              <Image src={bgImage} alt="Bg-image" fill />
+              <Image
+                src={bgImage}
+                alt="Bg-image"
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="bg-white/[70%] w-full h-full top-0 left-0 absolute"></div>
           </div>
@@ -86,7 +92,7 @@ export function Conversation() {
         </div>
 
         {/* Footer of chat section */}
-        <div>
+        <div className="flex justify-between items-center gap-3">
           {/* Add button */}
           <div>
             <button className="text-[#747881]">
@@ -95,13 +101,21 @@ export function Conversation() {
           </div>
 
           {/* Input field */}
-          <div>
-            <input type="text" className="" />
+          <div className="w-full flex justify-center items-center border-[#F49595] border-[0.5px] rounded-xl">
+            <input
+              type="text"
+              className=" w-full outline-none p-2 rounded-xl"
+            />
+            <div>
+              <button className="text-[#747881] mt-2">
+                <MdOutlineEmojiEmotions fontSize={30} />
+              </button>
+            </div>
           </div>
 
           {/* Send button */}
           <div>
-            <button className="text-white bg-[#FF0000]/[70%] p-3">
+            <button className="text-white rounded-full bg-[#FF0000]/[70%] p-3">
               <IoMdSend fontSize={20} />
             </button>
           </div>
