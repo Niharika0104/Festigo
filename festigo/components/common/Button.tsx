@@ -7,9 +7,9 @@ type ButtonProps = {
 };
 
 
-export function Button({ children, css, onClick }: ButtonProps) {
+export function Button({ children, css, clickHandler }: ButtonProps) {
   return (
-    <button className={css} onClick={onClick}>
+    <button className={css} onClick={clickHandler}>
       {children}
     </button>
   );

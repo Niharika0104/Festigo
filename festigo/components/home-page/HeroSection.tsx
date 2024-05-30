@@ -10,7 +10,7 @@ import arrow from "/public/assets/gifs/bottomArrow.gif";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 
-import { useRouter } from "next/navigation";;
+
 
 export function HeroSection() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export function HeroSection() {
     });
   }
 
-  const router = useRouter();
+
 
   return (
     <div className="w-full bg-main-page-hero z-10 h-screen flex justify-center items-center relative">
@@ -71,14 +71,8 @@ export function HeroSection() {
         {/* sign-up | sign-in Buttons */}
         <div className="flex w-[500px] mt-24 justify-between items-center">
           {/* Sign-in button */}
-          <Button
-            clickHandler={() => {
-              router.push("/auth/login");
-            }}
-            css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] hover:bg-[#FF0000] px-16"
-          >
-=======
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" onClick={() => {
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" clickHandler={() => {
 
 
             router.push('/auth/login')
@@ -89,13 +83,8 @@ export function HeroSection() {
           </Button>
 
           {/* Sign-up button */}
-          <Button
-            clickHandler={() => {
-              router.push("/auth/signup");
-            }}
-            css="text-white text-2xl rounded-lg font-bold py-3 hover:bg-[#000000] bg-[#1C1C1C] px-16"
-          >
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" onClick={() => {
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" clickHandler={() => {
 
 
             router.push('/auth/signup')
