@@ -283,7 +283,7 @@ export function Conversation() {
         <div className="flex relative shrink-0 px-2 bg-white justify-between items-center gap-3">
           {/* Add Options */}
           {showAddOptions && (
-            <div className="flex flex-col bottom-[60px] absolute bg-white rounded-2xl border-[#9C9C9C] border-[1px] shadow-md shadow-black/[25%] justify-normal items-start p-1">
+            <div className="flex flex-col z-20 bottom-[60px] absolute bg-white rounded-2xl border-[#9C9C9C] border-[1px] shadow-md shadow-black/[25%] justify-normal items-start p-1">
               {addOptions.map((option, index) => {
                 return (
                   <div
