@@ -122,7 +122,7 @@ function FeatureCard({
 export function Features() {
   return (
     <div>
-      <div className="w-full bg-white relative z-10 flex-col gap-40 justify-center flex items-center">
+      <div className="w-full bg-white relative z-10 flex-col gap-52 justify-center flex items-center">
         {/* shape-1 */}
         <div className="absolute w-[600px] left-[15%] top-10 z-[-10] h-[600px]">
           <Image src={shape1} alt="shape-1" fill />

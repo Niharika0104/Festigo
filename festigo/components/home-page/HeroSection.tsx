@@ -1,21 +1,37 @@
-"use client"
+"use client";
+
 
 import React from "react";
 import { Button } from "../common/Button";
 import logoImage from "/public/assets/images/logo.png";
 import webLogo from "/public/assets/images/main-logo.png";
 import Image from "next/image";
+import arrow from "/public/assets/gifs/bottomArrow.gif";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
-import { useRouter } from "next/navigation";;
+
 
 export function HeroSection() {
-
   const router = useRouter();
+  function ArrowHandler() {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+
 
 
   return (
     <div className="w-full bg-main-page-hero z-10 h-screen flex justify-center items-center relative">
       <div className=" w-full z-[-10] h-screen opacity-80  absolute bg-black"></div>
+      {/* Arrow */}
+      <div className="absolute bottom-5 right-5">
+        <button className="w-[75px] h-[70px] relative" onClick={ArrowHandler}>
+          <Image src={arrow} alt="arrow" fill />
+        </button>
+      </div>
       {/* logo-Image */}
       <div className="absolute top-5 left-7">
         <div className="relative w-[120px] h-[120px]">
@@ -55,7 +71,8 @@ export function HeroSection() {
         {/* sign-up | sign-in Buttons */}
         <div className="flex w-[500px] mt-24 justify-between items-center">
           {/* Sign-in button */}
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" onClick={() => {
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#C31616] px-16" clickHandler={() => {
 
 
             router.push('/auth/login')
@@ -66,7 +83,8 @@ export function HeroSection() {
           </Button>
 
           {/* Sign-up button */}
-          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" onClick={() => {
+         
+          <Button css="text-white text-2xl rounded-lg font-bold py-3 bg-[#1C1C1C] px-16" clickHandler={() => {
 
 
             router.push('/auth/signup')

@@ -3,12 +3,13 @@ import React from "react";
 type ButtonProps = {
   children: React.ReactNode;
   css: string;
-  onClick: () => void;
+  clickHandler: () => void;
 };
 
-export function Button({ children, css, onClick }: ButtonProps) {
+
+export function Button({ children, css, clickHandler }: ButtonProps) {
   return (
-    <button className={css} onClick={onClick}>
+    <button className={css} onClick={clickHandler}>
       {children}
     </button>
   );
