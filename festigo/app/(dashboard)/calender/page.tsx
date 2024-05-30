@@ -1,7 +1,7 @@
 "use client"
 
 import Calendar from "@/components/dashboard/calendar/Calendar"
-import CustomCalendar from "@/components/dashboard/calendar/CustomCalendat"
+import CustomCalendar from "@/components/dashboard/calendar/CustomCalendar"
 
 export default function CalendarPage() {
 
