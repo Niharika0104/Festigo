@@ -147,7 +147,7 @@ export function Conversation() {
   }, [conversationId]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full mb-12">
       <div className="w-full relative h-full">
         {/* Navbar of chat section */}
         <div className="w-full relative flex justify-between items-center bg-white">

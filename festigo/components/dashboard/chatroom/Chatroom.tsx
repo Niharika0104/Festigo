@@ -48,7 +48,7 @@ export function Chatroom() {
   const chatId = searchParams.get("chatId");
 
   return (
-    <div className="h-full flex justify-start  items-start gap-8 w-full">
+    <div className="h-full flex justify-start  items-start gap-8 w-11/12 mx-auto mb-12">
       {/* chat-lists */}
       <div className="w-[350px] border-r-[1px] border-[#DBDDE1] shrink-0 h-full bg-white px-2 flex flex-col gap-5 py-8">
         {/* Search bar */}
@@ -110,7 +110,7 @@ export function Chatroom() {
                   </div>
 
                   {/* last message time | more options */}
-                  <div className="flex flex-col justify-end gap-2 items-end">
+                  <div className="flex flex-col justify-end gap-2 items-end ">
                     {/* more options */}
                     <div className="text-[#747881] rounded-full cursor-pointer">
                       <BiDotsVerticalRounded fontSize={16} />
