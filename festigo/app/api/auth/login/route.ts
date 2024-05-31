@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 dotenv.config();
 
 interface User {
-    
+
     username: string;
     password: string;
     email: string;
@@ -47,7 +47,8 @@ export async function POST(req: NextRequest) {
                 cookies().set("token", token, {
                     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
                     httpOnly: true,
-                    secure: true
+                    secure: true,
+                    path: '/',
                 });
 
                 return NextResponse.json({ data: result, status: 200 });
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "User does not exist", status: 400 });
         }
 
-    } catch (error:any) {
+    } catch (error: any) {
         console.error("Error processing request:", error);
         return NextResponse.json({ message: "Internal server error", status: 500 });
     }
