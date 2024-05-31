@@ -1,7 +1,7 @@
 
 "use client"
 
-import FestigoLogo from "@/public/assests/icons/FestigoLogo.jpg";
+import FestigoLogo from "@/public/assests/icons/FestigoLogo.png";
 
 import Logo from "@/public/assests/logo.png";
 
@@ -16,18 +16,19 @@ import { useState } from "react";
 export default function Sidebar() {
 
     const [currentState, setCurrentState] = useState(SideBarData[0].title);
+
     const router= useRouter() ;
 
     return (
 
 
-        <div className=" min-h-screen max-w-maxContent overflow-hidden">
+        <div className=" max-w-maxContent min-h-screen overflow-hidden">
 
             {/* top section  */}
 
             {/* w-[70%] */}
 
-            <div className=" relative flex flex-col w-[250px] gap-4">
+            <div className=" relative flex flex-col w-[290px] gap-4 h-[832px]">
 
                 <div className="relative flex items-center gap-3 p-5 shadow-md ">
 

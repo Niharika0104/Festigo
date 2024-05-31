@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {Payout} from '@/components/dashboard/payout/Payout'
 function Page() {
@@ -5,7 +6,7 @@ function Page() {
     <div>
       <Payout/>
     </div>
-  )
+  );
 }
 
-export default Page
+export default Page;

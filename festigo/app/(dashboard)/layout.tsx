@@ -8,43 +8,32 @@ import PlusIcon from "@/public/assests/icons/PulsIcon.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import UserImage from "@/public/assests/icons/userImage.png";
 import { CiLocationOn } from "react-icons/ci";
-
 import MessageIcon from "@/public/assests/icons/messageIcon.png";
 import Image from "next/image";
 
+import TopBar from "@/components/common/Topbar";
+
 export default function Layout({
-
-    children,
-  
-  }: Readonly<{
-  
-    children: React.ReactNode;
-  
-  }>) {
-    return (
-      <>
-   
-   <div className="grid grid-cols-12 ">
-    <div className="bg-white  fixed bottom-0">
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className="flex min-h-screen bg-[#FEF4F4] ">
+      <div className="bg-white w-1/6 h-screen fixed top-0 left-0 ">
         <Sidebar />
-    </div>
-    <div className="col-span-12 pl-[300px]  bg-[#FEF4F4]"> 
+      </div>
+      <div className="w-5/6 ml-auto h-screen  flex flex-col">
+
+        <TopBar></TopBar>
+
         {children}
+
+      </div>
     </div>
-</div>
+  );
+}
 
 
 
-      {/* <div className="w-screen min-h-screen bg-[#FEF4F4] overflow-hidden">
-            <div className="relative flex flex-col md:flex-row gap-4 w-full p-4">
-                <div className="bg-white">
-                    <Sidebar />
-                </div>
-              <div> {children}</div>
-             
-            </div>
-        </div> */}
-       
-      </>
-    )
-  }
+
