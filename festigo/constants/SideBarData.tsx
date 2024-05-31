@@ -42,7 +42,7 @@ export const SideBarData = [
     {
         title: "Schedules",
         icon: <Image src={Shedule} alt="Bookings" />,
-        link:"/dashboard/calendar"
+        link:"/calender"
 
     },
     {
@@ -60,7 +60,8 @@ export const SideBarData = [
     },
     {
         title: "Settings",
-        icon: <IoSettingsOutline size={22}/>
+        icon: <IoSettingsOutline size={22}/>,
+        link:"/settings"
     },
     {
         title: "Log Out",
