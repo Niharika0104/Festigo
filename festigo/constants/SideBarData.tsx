@@ -42,7 +42,7 @@ export const SideBarData = [
     {
         title: "Schedules",
         icon: <Image src={Shedule} alt="Bookings" />,
-        link:"/dashboard/calendar"
+        link:"/calender"
 
     },
     {
