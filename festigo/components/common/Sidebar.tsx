@@ -22,7 +22,7 @@ export default function Sidebar() {
     return (
 
 
-        <div className=" max-w-maxContent min-h-screen overflow-hidden">
+        <div className=" max-w-maxContent min-h-max overflow-hidden">
 
             {/* top section  */}
 
