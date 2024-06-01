@@ -25,7 +25,8 @@ export const SideBarData = [
     },
     {
         title: "Vendors",
-        icon: <IoIosPerson size={22}/>
+        icon: <IoIosPerson size={22}/>,
+        link:"/vendors"
     },
     {
         title: "Chatroom",
