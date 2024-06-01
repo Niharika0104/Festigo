@@ -51,7 +51,7 @@ const  groupByStartDate=(arr: Event[])=>{
         result[monthDay].push(item);
       }
   });
-  console.log(result)
+ 
   return result;
 }
 const organizedEvents: { [key: string]: Event[] } = {};
@@ -141,20 +141,21 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
         
       />
     <div className="w-full h-full flex flex-col mb-9 relative">
-      <div className='abolute object-contain'>
-  <div className='w-[200px] h-[100px] flex justify-evenly items-center  '>
+      <div className='abolute object-contain px-10'>
+  <div className='w-[200px] h-[100px] flex justify-evenly items-center gap-12 relative'>
     <FaChevronLeft style={{...iconStyle,cursor: 'pointer' }} onClick={handleLeftClick}  />
-    <div className='text-lg'>{currentMonth.month}</div>
+    <div className='text-lg mx-12 w-auto object-contain absolute'>{currentMonth.month}</div>
     <FaChevronRight style={{...iconStyle,cursor: 'pointer' }} onClick={handleRightClick}/>
   </div>
   </div>
+ 
+  
+  <div className="flex-1 w-11/12 mx-auto">
   <div className="grid grid-cols-7">
     {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => (
       <div key={index} className="p-2">{day}</div>
     ))}
   </div>
-  
-  <div className="flex-1 pr-12">
   <div className="grid grid-cols-7 grid-auto-rows-[1fr]">
     {/* Fill dates of the first week of the current month */}
     {[...Array(getFirstDayOfWeek(currentMonth.idx + 1, year))].map((_, index) => {

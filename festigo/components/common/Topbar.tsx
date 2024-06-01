@@ -4,6 +4,7 @@ import InputField from "./InputField";
 
 import { PiUserCircleDuotone } from "react-icons/pi";
 
+import { useAuth } from "@/app/context/AuthContext";
 import { useState } from "react";
 
 import { CiSearch } from "react-icons/ci";
@@ -12,7 +13,9 @@ export default function TopBar() {
 
 
     const [textData, setTextData] = useState({ text: "" });
-
+    const user:any=useAuth();
+   
+    
     function changeHandler(event: any) {
 
         setTextData({ text: event.target.value });
@@ -28,7 +31,7 @@ export default function TopBar() {
 
                 <div className="flex flex-col pl-8">
 
-                    <p className="text-[#707EAE]">Hii Radhika, </p>
+                    <p className="text-[#707EAE]">Hii {user?.authentication?.username} </p>
 
                     <h1 className="text-[#2B3674] text-3xl font-bold">
 

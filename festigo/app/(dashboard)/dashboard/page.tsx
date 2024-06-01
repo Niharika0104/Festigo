@@ -1,4 +1,4 @@
-import DashBoard from "@/components/dashboard/DashBoard";
+import DashBoard from "@/components/dashboard/Dashboard";
 
 export default function DashBoardComponent() {
   return (
