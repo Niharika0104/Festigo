@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     });
     const mySet = new Set<string>();
     const result: any[] = []
-    
+
     const filtered = chats.forEach((chat) => {
       const oneway: string = `${chat.senderId}_${chat.receiverId}`
       const otherway: string = `${chat.receiverId}_${chat.senderId}`

@@ -46,12 +46,19 @@ export default function Login() {
     event.preventDefault();
 
     try {
+      const payload = userData.email.includes("@")
+        ? {
+            email: userData.email,
+            password: userData.password,
+          }
+        : {
+            username: userData.email,
+            password: userData.password,
+          };
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
-        {
-          email: userData.email,
-          password: userData.password,
-        }
+        payload
       );
 
       setUser(response.data?.data);
