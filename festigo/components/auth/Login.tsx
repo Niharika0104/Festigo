@@ -63,6 +63,7 @@ export default function Login() {
         toast.success(response.data.message);
       }
     } catch (error: any) {
+      
       toast.error(error.message);
     }
   }
