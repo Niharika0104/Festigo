@@ -13,6 +13,9 @@ import { MdPhotoLibrary } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
 import { LiaCheckDoubleSolid } from "react-icons/lia";
+import axios from "axios";
+import { useAuth } from "@/app/context/AuthContext";
+import { formatTime } from "@/Utils/date";
 
 const addOptions = [
   {
@@ -135,16 +138,25 @@ const messages = [
   },
 ];
 
-export function Conversation() {
-  const searchParams = useSearchParams();
-  const conversationId = searchParams.get("chatId");
+export function Conversation({ conversation }: any) {
   const [showAddOptions, setShowAddOptions] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const userId = 1;
+  const [chats, setChats] = useState(null);
+  const { user } = useAuth();
+
+  async function fetchUserChat() {
+    try {
+      const res = await axios.post("/api/chats/chatsbyuser", conversation);
+      setChats(res.data.data);
+      console.log("res: ", res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    console.log("Get chat from backend");
-  }, [conversationId]);
+    if (conversation && user) fetchUserChat();
+  }, [conversation, user]);
 
   return (
     <div className="w-full h-full mb-12">
@@ -169,7 +181,7 @@ export function Conversation() {
 
           {/* User name */}
           <div className="w-full h-[60px] py-1 px-2">
-            {conversationId && (
+            {conversation && (
               <div className="flex justify-start gap-2 items-center">
                 {/* profile-image */}
                 <div className="rounded-full bg-gray-300 overflow-hidden relative h-[50px] w-[50px]">
@@ -179,7 +191,11 @@ export function Conversation() {
                 {/* name | online */}
                 <div className="flex flex-col justify-start items-start">
                   {/* name */}
-                  <span className="text-lg font-medium">Radha’s Sautan</span>
+                  <span className="text-lg font-medium">
+                    {conversation.senderId === user.username
+                      ? conversation.receiverId
+                      : conversation.senderId}
+                  </span>
                   {/* online */}
                   <span className="text-[#747881] text-xs">
                     online {10} min ago
@@ -200,48 +216,51 @@ export function Conversation() {
         </div>
 
         {/* Middle part for chat */}
-        <div className=" h-[85%] z-10 w-full relative">
+        <div className=" h-[82%] z-10 w-full relative">
           <>
-            {conversationId ? (
+            {conversation ? (
               // If conversation id found
               <div className="z-[100] w-full overflow-y-auto scroll-smooth flex flex-col gap-2 h-full py-5 px-2">
-                {messages?.map((message) => {
-                  return (
-                    <div
-                      key={message.id}
-                      className={`flex w-full flex-col ${
-                        message.userId === userId
-                          ? "justify-end items-end"
-                          : "justify-start  items-start"
-                      }`}
-                    >
-                      {/* Message */}
+                {chats &&
+                  chats?.map((message: any) => {
+                    return (
                       <div
-                        className={`${
-                          message.userId === userId
-                            ? "bg-[#e47d7d]"
-                            : "bg-[#E9EAED]"
-                        } p-2 rounded-lg`}
-                      >
-                        <span>{message.message}</span>
-                      </div>
-
-                      {/* Time and tick */}
-                      <div
-                        className={` ${
-                          message.userId === userId ? "flex" : "hidden"
+                        key={message.id}
+                        className={`flex w-full flex-col ${
+                          message.senderId === user.username
+                            ? "justify-end items-end"
+                            : "justify-start  items-start"
                         }`}
                       >
-                        <span className={` text-[#005FFF]`}>
-                          <LiaCheckDoubleSolid fontSize={15} />
-                        </span>
-                        <span className="text-[#747881] text-[10px]">
-                          2:20 PM
-                        </span>
+                        {/* Message */}
+                        <div
+                          className={`${
+                            message.senderId === user.username
+                              ? "bg-[#e47d7d]"
+                              : "bg-[#E9EAED]"
+                          } p-2 rounded-lg`}
+                        >
+                          <span>{message.message}</span>
+                        </div>
+
+                        {/* Time and tick */}
+                        <div
+                          className={` flex gap-1 justify-center items-center ${
+                            message.senderId === user.username
+                              ? "flex"
+                              : "hidden"
+                          }`}
+                        >
+                          <span className={` text-[#005FFF]`}>
+                            <LiaCheckDoubleSolid fontSize={15} />
+                          </span>
+                          <span className="text-[#747881] text-[10px]">
+                            {formatTime(message.timestamp)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             ) : (
               // If conversation id not found

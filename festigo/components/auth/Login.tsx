@@ -46,12 +46,19 @@ export default function Login() {
     event.preventDefault();
 
     try {
+      const payload = userData.email.includes("@")
+        ? {
+            email: userData.email,
+            password: userData.password,
+          }
+        : {
+            username: userData.email,
+            password: userData.password,
+          };
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
-        {
-          email: userData.email,
-          password: userData.password,
-        }
+        payload
       );
 
       setUser(response.data?.data);
@@ -117,11 +124,11 @@ export default function Login() {
             </h1>
 
             <InputField
-              type="email"
+              type="text"
               name="email"
               value={userData.email}
               onChange={changeHandler}
-              label="Enter Your Email:"
+              label="Enter Your Email Or Username:"
               required={true}
               icon={<MdEmail />}
               placeholder="email.address.123@festigo.com"
