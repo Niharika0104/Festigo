@@ -104,11 +104,11 @@ export function Conversation({ conversation }: any) {
 
   // recieve messages from socket server
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("recieve-message", (data) => {
-        setRecieveMessages(data);
-      });
-    }
+    console.log("chlaa");
+    socket.current?.on("recieve-message", (data) => {
+      console.log("ayaa");
+      setRecieveMessages(data);
+    });
   }, []);
 
   // Function for sending message
@@ -134,13 +134,11 @@ export function Conversation({ conversation }: any) {
     // Store message in database
     try {
       const result = await axios.post("/api/chats/sendMessage", payload);
-      console.log("result: ", result);
-
       setChats([...chats, result.data.data]);
       setMessage("");
 
       // Send message to socket server
-      setSendMessages({ ...payload });
+      setSendMessages(payload);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -148,12 +146,8 @@ export function Conversation({ conversation }: any) {
 
   // recieve message
   useEffect(() => {
-    if (
-      recieveMessages !== null &&
-      recieveMessages.senderId === user.username &&
-      recieveMessages.receiverId === receiver &&
-      recieveMessages.eventId === event.id
-    ) {
+    if (recieveMessages !== null) {
+      console.log("update");
       setChats([...chats, recieveMessages]);
     }
   }, [recieveMessages]);

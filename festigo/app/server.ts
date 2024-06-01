@@ -30,21 +30,17 @@ io.on('connection', async (socket: any) => {
             );
         }
         io.emit("get-active-users", activeUsers);
-        console.log("activeUsers: ", activeUsers)
     });
 
     // Send Message
     socket.on("send-message", (data: any) => {
-
-        console.log(data)
-
         const { receiverId: userId } = data;
 
+        console.log("rec: ", userId)
         const user = activeUsers.find((user: any) => user.userId === userId);
 
-        console.log("user: ", user)
-
         if (user) {
+            console.log("bheja")
             io.to(user.socketId).emit("recieve-message", data)
         }
     });
