@@ -3,13 +3,16 @@ import React, { useState } from 'react';
 interface DropdownMenuProps {
   options: string[];
   value?:string;
- 
+  width?:string;
+  rounded?:boolean;
+  height?:boolean;
   onSelect: (option: string) => void;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ options,value, onSelect }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
    const [selected,setSelected]=useState(value||"");
+   const dropdownStyle=12;
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };

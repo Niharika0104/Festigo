@@ -19,11 +19,11 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen bg-[#FEF4F4]">
-      <div className="bg-white w-1/6 h-screen fixed top-0 left-0">
+    <div className="flex  bg-[#FEF4F4] ">
+      <div className="bg-white w-1/6 fixed top-0 left-0 ">
         <Sidebar />
       </div>
-      <div className="w-5/6 ml-auto h-screen overflow-y-hidden flex flex-col">
+      <div className="w-5/6 ml-auto  flex flex-col">
 
         <TopBar></TopBar>
 
