@@ -116,11 +116,11 @@ export default function Login() {
             </h1>
 
             <InputField
-              type="email"
+              type="text"
               name="email"
               value={userData.email}
               onChange={changeHandler}
-              label="Enter Your Email:"
+              label="Enter Your Email Or Username:"
               required={true}
               icon={<MdEmail />}
               placeholder="email.address.123@festigo.com"

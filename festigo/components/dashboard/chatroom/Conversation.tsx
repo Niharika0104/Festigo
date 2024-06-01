@@ -200,7 +200,7 @@ export function Conversation() {
         </div>
 
         {/* Middle part for chat */}
-        <div className=" h-[85%] z-10 w-full relative">
+        <div className=" h-[82%] z-10 w-full relative">
           <>
             {conversationId ? (
               // If conversation id found

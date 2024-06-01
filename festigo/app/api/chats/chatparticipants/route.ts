@@ -32,6 +32,7 @@ export async function GET(req: NextRequest) {
     });
     const mySet = new Set<string>();
     const result: any[] = []
+    
     const filtered = chats.forEach((chat) => {
       const oneway: string = `${chat.senderId}_${chat.receiverId}`
       const otherway: string = `${chat.receiverId}_${chat.senderId}`
@@ -41,7 +42,9 @@ export async function GET(req: NextRequest) {
         mySet.add(otherway)
         mySet.add(oneway);
       }
-    })
+    });
+
+
     return NextResponse.json({ data: result, status: 200 })
   }
   catch (ex) {

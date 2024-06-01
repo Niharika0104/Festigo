@@ -51,17 +51,17 @@ export async function POST(req: NextRequest) {
                     path: '/',
                 });
 
-                return NextResponse.json({ data: result, status: 200 });
+                return NextResponse.json({ data: result, status: 200 }, { status: 200 });
             } else {
-                return NextResponse.json({ message: "Incorrect password", status: 401 });
+                return NextResponse.json({ message: "Incorrect password", status: 401 }, { status: 401 });
             }
         } else {
-            return NextResponse.json({ message: "User does not exist", status: 400 });
+            return NextResponse.json({ message: "User does not exist", status: 400 }, { status: 404 });
         }
 
     } catch (error: any) {
         console.error("Error processing request:", error);
-        return NextResponse.json({ message: "Internal server error", status: 500 });
+        return NextResponse.json({ message: "Internal server error", status: 500 }, { status: 500 });
     }
 }
 

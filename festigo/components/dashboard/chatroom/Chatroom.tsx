@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Conversation } from "./Conversation";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 const data = [
   {
@@ -29,23 +30,27 @@ const data = [
 ];
 
 export function Chatroom() {
-  //   async function api() {
-  //     try {
-  //       const res = await axios.get(
-  //         "/api/chats/chatparticipants?username=sdf&eventId=sdf"
-  //       );
-  //       console.log(res);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   useEffect(() => {
-  //     api();
-  //   }, []);
-
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chatId");
+
+  const { user }: any = useAuth();
+
+  async function fetchChatParticipants() {
+    try {
+      const res = await axios.get(
+        `/api/chats/chatparticipants?username=${user.username}&eventId=${user.id}`
+      );
+      console.log("res: ", res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchChatParticipants();
+    }
+  }, [user]);
 
   return (
     <div className="h-full flex justify-start  items-start gap-8 w-full">
