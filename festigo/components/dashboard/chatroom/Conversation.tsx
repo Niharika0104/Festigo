@@ -6,7 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { MdPhotoLibrary } from "react-icons/md";
@@ -16,6 +16,8 @@ import { LiaCheckDoubleSolid } from "react-icons/lia";
 import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
 import { formatTime } from "@/Utils/date";
+import io, { Socket } from "socket.io-client";
+import { useEvent } from "@/app/context/EventContext";
 
 const addOptions = [
   {
@@ -45,118 +47,121 @@ const moreOptions = [
   "Close Chat",
 ];
 
-const messages = [
-  {
-    id: 678,
-    userId: 1,
-    message: "Hello",
-  },
-  {
-    id: 890,
-    userId: 2,
-    message: "Hello",
-  },
-  {
-    id: 345,
-    userId: 1,
-    message: "What's you name",
-  },
-  {
-    id: 67890,
-    userId: 2,
-    message: "Gojo",
-  },
-  {
-    id: 1234,
-    userId: 2,
-    message: "What's your?",
-  },
-  {
-    id: 3090,
-    userId: 1,
-    message: "Sukuna, hehehe",
-  },
-  {
-    id: 678,
-    userId: 1,
-    message: "Hello",
-  },
-  {
-    id: 890,
-    userId: 2,
-    message: "Hello",
-  },
-  {
-    id: 345,
-    userId: 1,
-    message: "What's you name",
-  },
-  {
-    id: 67890,
-    userId: 2,
-    message: "Gojo",
-  },
-  {
-    id: 1234,
-    userId: 2,
-    message: "What's your?",
-  },
-  {
-    id: 3090,
-    userId: 1,
-    message: "Sukuna, hehehe",
-  },
-  {
-    id: 678,
-    userId: 1,
-    message: "Hello",
-  },
-  {
-    id: 890,
-    userId: 2,
-    message: "Hello",
-  },
-  {
-    id: 345,
-    userId: 1,
-    message: "What's you name",
-  },
-  {
-    id: 67890,
-    userId: 2,
-    message: "Gojo",
-  },
-  {
-    id: 1234,
-    userId: 2,
-    message: "What's your?",
-  },
-  {
-    id: 3090,
-    userId: 1,
-    message: "Sukuna, hehehe",
-  },
-];
-
 export function Conversation({ conversation }: any) {
+  const { user }: any = useAuth();
+  const { event }: any = useEvent();
   const [showAddOptions, setShowAddOptions] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [chats, setChats] = useState(null);
-  const { user } = useAuth();
+  const [sendMessages, setSendMessages] = useState(null);
+  const [recieveMessages, setRecieveMessages] = useState(null);
+  const [receiver, setReceiverId] = useState("");
+  const [chats, setChats] = useState([]);
+  const [message, setMessage] = useState<string>("");
+  const socket = useRef<Socket | null>(null);
+  const scroll = useRef();
 
+  // SocketIo implementation
+  useEffect(() => {
+    if (!user) return;
+    socket.current = io("http://localhost:3001");
+    socket.current.emit("add-user", user.username);
+
+    socket.current.on("get-active-users", (activeUsers) => {
+      console.log(activeUsers);
+    });
+  }, [user]);
+
+  // Fetch old messages
   async function fetchUserChat() {
     try {
       const res = await axios.post("/api/chats/chatsbyuser", conversation);
       setChats(res.data.data);
-      console.log("res: ", res.data.data);
     } catch (error) {
       console.log(error);
     }
   }
-
   useEffect(() => {
     if (conversation && user) fetchUserChat();
   }, [conversation, user]);
+
+  // Get receiver
+  useEffect(() => {
+    if (conversation && user) {
+      const newRec =
+        conversation.senderId === user.username
+          ? conversation.receiverId
+          : conversation.senderId;
+      setReceiverId(newRec);
+    }
+  }, [conversation, user]);
+
+  // Send messages to socket server
+  useEffect(() => {
+    if (socket.current && sendMessages !== null) {
+      socket.current.emit("send-message", sendMessages);
+    }
+  }, [sendMessages]);
+
+  // recieve messages from socket server
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("recieve-message", (data) => {
+        setRecieveMessages(data);
+      });
+    }
+  }, []);
+
+  // Function for sending message
+  const sendMessageHandler = async (e) => {
+    e.preventDefault();
+
+    if (message.trim().length <= 0) {
+      return;
+    }
+
+    const payload = {
+      id: Date.now().toString(),
+      message,
+      senderId: user.username,
+      receiverId: receiver,
+      timestamp: new Date().toISOString(),
+      isEdited: false,
+      isDeleted: false,
+      eventId: conversation.eventId,
+      event: event.eventName,
+    };
+
+    // Store message in database
+    try {
+      const result = await axios.post("/api/chats/sendMessage", payload);
+      console.log("result: ", result);
+
+      setChats([...chats, result.data.data]);
+      setMessage("");
+
+      // Send message to socket server
+      setSendMessages({ ...payload });
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
+
+  // recieve message
+  useEffect(() => {
+    if (
+      recieveMessages !== null &&
+      recieveMessages.senderId === user.username &&
+      recieveMessages.receiverId === receiver &&
+      recieveMessages.eventId === event.id
+    ) {
+      setChats([...chats, recieveMessages]);
+    }
+  }, [recieveMessages]);
+
+  // scroll to the last message
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chats]);
 
   return (
     <div className="w-full h-full">
@@ -335,7 +340,10 @@ export function Conversation({ conversation }: any) {
           <div className="w-full flex justify-center items-center border-[#F49595] border-[0.5px] rounded-xl">
             <input
               type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               className=" w-full outline-none p-2 rounded-xl"
+              placeholder="Type your message"
             />
             <div>
               <button className="text-[#747881] mt-2">
@@ -346,7 +354,10 @@ export function Conversation({ conversation }: any) {
 
           {/* Send button */}
           <div>
-            <button className="text-white rounded-full bg-[#FF0000]/[70%] p-3">
+            <button
+              onClick={sendMessageHandler}
+              className="text-white rounded-full bg-[#FF0000]/[70%] p-3"
+            >
               <IoMdSend fontSize={20} />
             </button>
           </div>

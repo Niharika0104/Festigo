@@ -16,9 +16,17 @@ export const EventProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       // fetch events from db
-      const response = await axios.get(
-        `/api/event/allevents?username=${user.username}`
-      );
+      let response;
+
+      if (user.role === "eventOrganizer") {
+        response = await axios.get(
+          `/api/event/allevents?username=${user.username}`
+        );
+      } else {
+        response = await axios.get(
+          `/api/event/allevents?username=${user.username}`
+        );
+      }
 
       //   filter on the starting date of events
       const sortedEvents = response.data.data.sort(
