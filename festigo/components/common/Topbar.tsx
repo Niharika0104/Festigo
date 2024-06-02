@@ -13,7 +13,7 @@ export default function TopBar() {
 
 
     const [textData, setTextData] = useState({ text: "" });
-    const user:any=useAuth();
+    const userInfo:any=useAuth();
    
     
     function changeHandler(event: any) {
@@ -31,7 +31,7 @@ export default function TopBar() {
 
                 <div className="flex flex-col pl-8">
 
-                    <p className="text-[#707EAE]">Hii {user?.authentication?.username} </p>
+                    <p className="text-[#707EAE]">Hii {userInfo?.user?.username} </p>
 
                     <h1 className="text-[#2B3674] text-3xl font-bold">
 
