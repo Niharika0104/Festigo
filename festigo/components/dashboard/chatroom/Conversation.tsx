@@ -1,6 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import bgImage from "/public/assets/images/main-page-hero.jpg";
+import bgImage from "/public/assets/images/chat-bg.jpeg";
 import messageImg from "/public/assets/images/message.png";
 import { BsThreeDots } from "react-icons/bs";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -16,7 +17,7 @@ import { LiaCheckDoubleSolid } from "react-icons/lia";
 import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
 import { formatTime } from "@/Utils/date";
-import io, { Socket } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { useEvent } from "@/app/context/EventContext";
 
 const addOptions = [
@@ -52,24 +53,46 @@ export function Conversation({ conversation }: any) {
   const { event }: any = useEvent();
   const [showAddOptions, setShowAddOptions] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [sendMessages, setSendMessages] = useState(null);
-  const [recieveMessages, setRecieveMessages] = useState(null);
-  const [receiver, setReceiverId] = useState("");
+  const [receiver, setReceiver] = useState("");
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState<string>("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef<Socket | null>(null);
-  const scroll = useRef();
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // SocketIo implementation
   useEffect(() => {
     if (!user) return;
+
     socket.current = io("http://localhost:3001");
+
     socket.current.emit("add-user", user.username);
 
     socket.current.on("get-active-users", (activeUsers) => {
-      console.log(activeUsers);
+      console.log("Active users:", activeUsers);
+      setOnlineUsers(activeUsers);
     });
+
+    socket.current.on("recieve-message", (data) => {
+      setChats((prevChats) => [...prevChats, data]);
+    });
+
+    return () => {
+      socket.current?.disconnect();
+    };
   }, [user]);
+
+  // Set receiver
+  useEffect(() => {
+    if (conversation && user) {
+      const newRec =
+        conversation.senderId === user.username
+          ? conversation.receiverId
+          : conversation.senderId;
+
+      setReceiver(newRec);
+    }
+  }, [conversation, user]);
 
   // Fetch old messages
   async function fetchUserChat() {
@@ -77,6 +100,7 @@ export function Conversation({ conversation }: any) {
       const res = await axios.post("/api/chats/chatsbyuser", conversation);
       setChats(res.data.data);
     } catch (error) {
+      setChats([]);
       console.log(error);
     }
   }
@@ -84,77 +108,45 @@ export function Conversation({ conversation }: any) {
     if (conversation && user) fetchUserChat();
   }, [conversation, user]);
 
-  // Get receiver
-  useEffect(() => {
-    if (conversation && user) {
-      const newRec =
-        conversation.senderId === user.username
-          ? conversation.receiverId
-          : conversation.senderId;
-      setReceiverId(newRec);
-    }
-  }, [conversation, user]);
-
-  // Send messages to socket server
-  useEffect(() => {
-    if (socket.current && sendMessages !== null) {
-      socket.current.emit("send-message", sendMessages);
-    }
-  }, [sendMessages]);
-
-  // recieve messages from socket server
-  useEffect(() => {
-    console.log("chlaa");
-    socket.current?.on("recieve-message", (data) => {
-      console.log("ayaa");
-      setRecieveMessages(data);
-    });
-  }, []);
-
   // Function for sending message
-  const sendMessageHandler = async (e) => {
-    e.preventDefault();
+  const sendMessageHandler = async (e: any) => {
+    if (receiver && user) {
+      e.preventDefault();
 
-    if (message.trim().length <= 0) {
-      return;
-    }
+      if (message.trim().length <= 0) {
+        return;
+      }
 
-    const payload = {
-      id: Date.now().toString(),
-      message,
-      senderId: user.username,
-      receiverId: receiver,
-      timestamp: new Date().toISOString(),
-      isEdited: false,
-      isDeleted: false,
-      eventId: conversation.eventId,
-      event: event.eventName,
-    };
+      const payload = {
+        id: Date.now().toString(),
+        message,
+        senderId: user.username,
+        receiverId: receiver,
+        timestamp: new Date().toISOString(),
+        isEdited: false,
+        isDeleted: false,
+        eventId: conversation.eventId,
+        event: event.eventName,
+      };
 
-    // Store message in database
-    try {
-      const result = await axios.post("/api/chats/sendMessage", payload);
-      setChats([...chats, result.data.data]);
-      setMessage("");
+      // Store message in database
+      try {
+        const result = await axios.post("/api/chats/sendMessage", payload);
 
-      // Send message to socket server
-      setSendMessages(payload);
-    } catch (error) {
-      console.log("Error: ", error);
+        // Send message to socket server
+        socket.current?.emit("send-message", payload);
+
+        setChats([...chats, result.data.data]);
+        setMessage("");
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     }
   };
 
-  // recieve message
+  // Scroll to the last message
   useEffect(() => {
-    if (recieveMessages !== null) {
-      console.log("update");
-      setChats([...chats, recieveMessages]);
-    }
-  }, [recieveMessages]);
-
-  // scroll to the last message
-  useEffect(() => {
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chats]);
 
   return (
@@ -190,14 +182,16 @@ export function Conversation({ conversation }: any) {
                 {/* name | online */}
                 <div className="flex flex-col justify-start items-start">
                   {/* name */}
-                  <span className="text-lg font-medium">
-                    {conversation.senderId === user.username
-                      ? conversation.receiverId
-                      : conversation.senderId}
-                  </span>
+                  <span className="text-lg font-medium">{receiver}</span>
                   {/* online */}
                   <span className="text-[#747881] text-xs">
-                    online {10} min ago
+                    {onlineUsers.some(
+                      (user: any) => user.userId === receiver
+                    ) ? (
+                      <span>Online</span>
+                    ) : (
+                      <span>Offline</span>
+                    )}
                   </span>
                 </div>
               </div>
@@ -224,6 +218,7 @@ export function Conversation({ conversation }: any) {
                   chats?.map((message: any) => {
                     return (
                       <div
+                        ref={scrollRef}
                         key={message.id}
                         className={`flex w-full flex-col ${
                           message.senderId === user.username
@@ -244,13 +239,15 @@ export function Conversation({ conversation }: any) {
 
                         {/* Time and tick */}
                         <div
-                          className={` flex gap-1 justify-center items-center ${
-                            message.senderId === user.username
-                              ? "flex"
-                              : "hidden"
-                          }`}
+                          className={` flex gap-1 pl-1 justify-center items-center`}
                         >
-                          <span className={` text-[#005FFF]`}>
+                          <span
+                            className={` text-[#005FFF]  ${
+                              message.senderId === user.username
+                                ? "block"
+                                : "hidden"
+                            }`}
+                          >
                             <LiaCheckDoubleSolid fontSize={15} />
                           </span>
                           <span className="text-[#747881] text-[10px]">
@@ -356,6 +353,7 @@ export function Conversation({ conversation }: any) {
             </button>
           </div>
         </div>
+        
       </div>
     </div>
   );

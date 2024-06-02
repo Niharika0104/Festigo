@@ -1,4 +1,3 @@
-
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -12,36 +11,28 @@ const io = new Server(server, {
     },
 });
 
-
 let activeUsers: any = [];
 
-io.on('connection', async (socket: any) => {
-    console.log('a user connected');
+io.on('connection', (socket: any) => {
 
     // Add user
     socket.on("add-user", (userId: string) => {
-        // if not added
         if (!activeUsers.some((user: any) => user.userId === userId)) {
-            activeUsers.push(
-                {
-                    userId,
-                    socketId: socket.id
-                }
-            );
+            activeUsers.push({ userId, socketId: socket.id });
         }
         io.emit("get-active-users", activeUsers);
+        console.log('User added:', userId, socket.id);
     });
 
     // Send Message
     socket.on("send-message", (data: any) => {
-        const { receiverId: userId } = data;
-
-        console.log("rec: ", userId)
-        const user = activeUsers.find((user: any) => user.userId === userId);
+        const { receiverId } = data;
+        const user = activeUsers.find((user: any) => user.userId === receiverId);
 
         if (user) {
-            console.log("bheja")
-            io.to(user.socketId).emit("recieve-message", data)
+            io.to(user.socketId).emit("recieve-message", data);
+        } else {
+            console.log('User not found:', receiverId);
         }
     });
 
@@ -50,9 +41,8 @@ io.on('connection', async (socket: any) => {
         activeUsers = activeUsers.filter((user: any) => user.socketId !== socket.id);
         io.emit("get-active-users", activeUsers);
     });
-
 });
 
 server.listen(3001, () => {
-    console.log('listening on *:3001');
+    console.log('Listening on *:3001');
 });

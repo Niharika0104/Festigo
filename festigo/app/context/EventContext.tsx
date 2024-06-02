@@ -29,7 +29,9 @@ export const EventProvider = ({ children }: { children: React.ReactNode }) => {
             new Date(b.startDateTime).getTime() -
             new Date(a.startDateTime).getTime()
         );
-        setEvent(sortedEvents[0]);
+
+        console.log(sortedEvents);
+        setEvent(sortedEvents[sortedEvents.length - 1]);
       } else {
         // Fetch events for vendors
         response = await axios.post(`/api/vendors/allEvents`, {
