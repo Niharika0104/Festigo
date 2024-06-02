@@ -67,8 +67,14 @@ model Vendor {
   vendorId       String  @unique
   eventId       String?           
   vendorName     String
+  OrderTitle     String? @default("")
   serviceType    String
+  OrderType      String @default("Product")
   contactInfo    String
+  budget         String @default("400")
+  Location       String @default("")
+  dateOfOrder    DateTime @default(now())
+  email          String @default("xyz@gmail.com")
   event  Event[]
   paymentsLedger PaymentsLedger[]
 }

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Vendor" ADD COLUMN     "Location" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "dateOfOrder" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "email" TEXT NOT NULL DEFAULT 'xyz@gmail.com';

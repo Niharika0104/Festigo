@@ -39,7 +39,7 @@ export default function DashBoardPage() {
                     <div className=" relative  flex justify-center items-center gap-32">
 
                         <GuestContainer
-
+                            
                             image={dualUser}
                             textSize="18px"
                             imageWidth="23.33px"

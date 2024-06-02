@@ -3,24 +3,42 @@ import { useState } from 'react';
 import InputField from './InputField';
 import DropdownMenu from './Dropdown';
 import TimePicker from './TimeFields';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useEvent } from '@/app/context/EventContext';
 const YourComponent = (props:any) => {
 
 
-  const [name,setName]=useState(props?.name||"");
+  const [name,setName]=useState(props?.vendorName||"");
   const [phoneNumber,setPhoneNumber]=useState(props?.phoneNumber || "");
   const [email,setEmail]=useState(props?.email||"");
   const [serviceType,setServieType]=useState(props?.serviceType)
-  
+  const event=useEvent();
   const options=["Product","Service","Emergency"];
-const handleSubmit=()=>{
+const handleSubmit=async (email:string)=>{
+
 
 }
-const handleVenueSelect=(value:any)=>{
-setServieType(value);
+const onSubmit=async ()=>{
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/addVendor`,{
+    eventId: event?.event?.id,
+    vendorId:email
+   
+  })
+  props?.invoke();
+  toast.success("vendor details updated successfully")
 }
- 
+const onSave=async()=>{
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendor/updateVendor`,{
+    vendorName:name,
+    email:email
+  })
+  props?.invoke();
+  toast.success("vendor details updated successfully")
+}
+
   return (
-    <form onSubmit={handleSubmit} className="w-[400px] mx-auto">
+    <form className="w-[400px] mx-auto">
  <div className="mb-4">
         <label htmlFor="eventTitle" className="block text-gray-700 font-bold mb-2">
        Name
@@ -49,25 +67,8 @@ setServieType(value);
         />
        
       </div>
-      <div className="mb-4">
-      <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
-          Order Type 
-        </label>
-       <DropdownMenu options={options} onSelect={handleVenueSelect} value={"Please select an option"||""}/>
-       
-      </div>
-      
      
-
-      
-      
-   
-      
-
-      
-
-
-      <div className="mb-4 justify-center flex gap-3 mt-4">
+     <div className="mb-4 justify-center flex gap-3 mt-4">
       { props?.edit?
       <div>
          <button
@@ -79,6 +80,7 @@ setServieType(value);
     <button
       type="submit"
       className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      onClick={()=>{onSave()}}
     >
    Save Changes
     </button>
@@ -89,7 +91,7 @@ setServieType(value);
       <button
       type="submit"
       className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    >
+     onClick={onSubmit}>
    Submit
     </button>}
        

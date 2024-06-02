@@ -59,7 +59,7 @@ function PrivacyInfo() {
                 birthday: new Date(birthday)
             });
             if (response.status === 200) {
-                toast.success("User updated successfully");
+                toast.success("User details updated successfully");
             } else {
                 toast.error("Failed to update user");
             }

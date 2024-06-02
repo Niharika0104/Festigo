@@ -19,11 +19,13 @@ export const EventProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await axios.get(
         `/api/event/allevents?username=${user.username}`
       );
-
+      const switchEvents=(val:any)=>{
+        setEvent(val)
+      }
       //   filter on the starting date of events
       const sortedEvents = response.data.data.sort(
         (a: any, b: any) =>
-          new Date(b.startDateTime) - new Date(a.startDateTime)
+          new Date(a.startDateTime) - new Date(b.startDateTime)
       );
 
       setEvent(sortedEvents[0]);

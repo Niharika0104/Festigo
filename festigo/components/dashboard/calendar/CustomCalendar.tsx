@@ -137,7 +137,7 @@ setChange(!change)
         const enddatetime = item.endDateTime.split('T'); // Assuming you meant to split endDateTime here
 
         arr.push({
-          eventId:item?.eventId,
+          eventId:item?.id,
           title: item.eventName,
           startDate: startdatetime[0],
           endDate: enddatetime[0],
@@ -198,7 +198,7 @@ const years: number[] = Array.from(new Array(2024 - 1950 + 1), (_, index) => 195
     <FaChevronRight style={{...iconStyle,cursor: 'pointer' }} onClick={handleRightClick}/>
   
   </div>
-  <button className=' bg-[#ff0000] text-white rounded-3xl py-3 px-5' onClick={()=>setModalOpen(true)}>create event</button>
+  <button className=' bg-[#ff0000] text-white rounded-3xl py-3 px-5' onClick={()=>{OpenPopUp({CloseModal:handleModalClose})}}>create event</button>
 
   </div>
  
