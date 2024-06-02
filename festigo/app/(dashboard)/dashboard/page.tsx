@@ -1,4 +1,8 @@
-import DashBoard from "@/components/dashboard/Dashboard";
+
+"use client"
+
+import DashBoard from "@/components/dashboard/DashBoard";
+
 
 export default function DashBoardComponent() {
   return (
@@ -7,3 +11,8 @@ export default function DashBoardComponent() {
     </div>
   );
 }
+
+
+
+
+

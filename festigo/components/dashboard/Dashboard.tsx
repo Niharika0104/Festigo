@@ -66,7 +66,7 @@ export default function DashBoard() {
                         {/* spend this month  */}
 
 
-                        <div className="flex gap-5 bg-white p-3 py-6 rounded-2xl w-fit px-6 pr-14 ml-6 ">
+                        <div className="flex gap-20 bg-white p-3 py-6 rounded-2xl w-fit px-6 pr-14 ml-6 ">
 
                             <div className="flex flex-col gap-2">
 
@@ -78,7 +78,7 @@ export default function DashBoard() {
 
                             <div className="flex gap-2">
 
-                                {[...Array(4)].map((_, idx) => (
+                                {[...Array(7)].map((_, idx) => (
 
                                     <div key={idx} className="flex flex-col rounded-full">
 
@@ -95,7 +95,7 @@ export default function DashBoard() {
                         {/* Guest 321  */}
 
 
-                        <div className="flex flex-row items-center gap-4 bg-white w-fit px-8 py-3 rounded-lg pr-[6rem]">
+                        <div className="flex flex-row items-center gap-4 bg-white w-fit px-8 py-3 rounded-lg pr-[8rem]">
                             
                             
                             <div className="w-[56px] h-[56px] p-2 rounded-full bg-red-500 flex justify-center items-center">
@@ -111,7 +111,7 @@ export default function DashBoard() {
 
                             </div>
 
-                            <div className="flex w-[58px] h-[28px]">
+                            <div className="flex w-[58px] h-[28px] pl-8">
 
                                 <Image src={curve} alt="curve " className="w-full h-full bg-cover"></Image>
 
@@ -122,7 +122,7 @@ export default function DashBoard() {
 
                         {/* Schedule an Event  */}
 
-                        <div className="flex justify-center gap-3 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl px-9">
+                        <div className="flex justify-center gap-16 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl px-9">
 
                             <p className="text-[#E9EDF7] text-[16px] w-[117px] text-wrap">Schedule an Event</p>
 
@@ -154,7 +154,7 @@ export default function DashBoard() {
 
                                 </div>
                                 <div className="flex gap-7">
-                                    {[...Array(7)].map((_, idx) => (
+                                    {[...Array(9)].map((_, idx) => (
                                         <div key={idx} className="flex flex-col items-center">
                                             <div className="h-[40px] bg-[#E9EDF7] rounded-t-full w-[13px]"></div>
                                             <div className="h-[80px] bg-[#FF0303] rounded-full w-[13px]"></div>
@@ -166,7 +166,7 @@ export default function DashBoard() {
 
                             {/* Your Transactions  */}
 
-                            <div className="flex flex-col bg-white w-fit p-1 rounded-xl px-8 pr-12">
+                            <div className="flex flex-col bg-white w-fit p-1 rounded-xl px-8 pr-36">
 
                                 <div>
                                     <h1 className="text-[#1B2559] text-xl font-bold  py-2 text-[20px]">Your transactions</h1>
@@ -211,7 +211,7 @@ export default function DashBoard() {
                             {/* designer wedding ,guest  */}
 
 
-                            <div className="flex flex-col gap-3 h-fit bg-white p-5 rounded-xl w-fit px-10 ">
+                            <div className="flex flex-col gap-3 h-fit bg-white p-5 rounded-xl w-fit px-12 pr-7">
 
                                 <div>
                                     <h1 className="text-[#1B2559] text-[34px] font-bold">27 May</h1>
@@ -252,7 +252,7 @@ export default function DashBoard() {
                             {/* Featured venue  */}
 
 
-                            <div className="flex flex-col bg-white p-5 rounded-xl w-fit h-fit gap-3 mt-1 pr-8 ">
+                            <div className="flex flex-col bg-white p-5 rounded-xl w-fit h-fit gap-3 mt-1 pr-14 ">
 
                                 <h1 className="text-[#1B2559] font-bold text-xl">Featured Venues</h1>
 
