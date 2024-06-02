@@ -129,7 +129,7 @@ setChange(!change)
     try {
       const arr:Event[] = [];
       console.log(username)
-      const response = await axios.get(`https://3000-niharika0104-festigo-3entu8eoexn.ws-us114.gitpod.io/api/event/allevents?username=${username}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/allevents?username=${username}`);
       console.log(response.data);
 
       response.data.data.forEach((item:any) => {

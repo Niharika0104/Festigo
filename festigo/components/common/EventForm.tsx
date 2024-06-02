@@ -22,7 +22,7 @@ const YourComponent = (props:any) => {
     
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://3000-niharika0104-festigo-3entu8eoexn.ws-us114.gitpod.io/api/venue/allvenues");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/venue/allvenues`);
         console.log(response.data);
         setVenueOptions(response.data.data);
       } catch (error) {
@@ -57,7 +57,7 @@ const handleFromTimeChange=(value:string)=>{
   }
   const handleSubmit = async (e:any) => {
     e.preventDefault();
-    const response = await axios.post(`https://3000-niharika0104-festigo-3entu8eoexn.ws-us114.gitpod.io/api/event/createEvent`, {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/createEvent`, {
       eventName: title,
       startDateTime: new Date(startDate+"T"+fromTime),
       endDateTime: new Date(endDate+"T"+toTime),
@@ -68,7 +68,7 @@ const handleFromTimeChange=(value:string)=>{
   };
 const saveChanges=async(e:any)=>{
   e.preventDefault();
-  const response = await axios.post(`https://3000-niharika0104-festigo-3entu8eoexn.ws-us114.gitpod.io/api/event/editEvent`, {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/editEvent`, {
     eventName: title,
     startDateTime: new Date(startDate+"T"+fromTime),
     endDateTime: new Date(endDate+"T"+toTime),
