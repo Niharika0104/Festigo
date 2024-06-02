@@ -1,10 +1,9 @@
-
-import React from 'react'
-import {Payout} from '@/components/dashboard/payout/Payout'
+import React from "react";
+import { Payout } from "@/components/dashboard/payout/Payout";
 function Page() {
   return (
-    <div>
-      <Payout/>
+    <div className="m-8 overflow-hidden h-[calc(100vh-150px)]">
+      <Payout />
     </div>
   );
 }
