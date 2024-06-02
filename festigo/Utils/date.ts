@@ -34,3 +34,21 @@ function isSameWeek(date1: Date, date2: Date): boolean {
 
     return date1StartOfWeek.toDateString() === date2StartOfWeek.toDateString();
 }
+
+
+export function formatDate(inputDate: string): string {
+    // Create a new Date object from the input date string
+    const date = new Date(inputDate);
+
+    // Get the day, month, and year from the Date object
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Months are zero-based in JavaScript
+    const year = date.getUTCFullYear();
+
+    // Format day and month to be two digits
+    const formattedDay = day < 10 ? `0${day}` : day.toString();
+    const formattedMonth = month < 10 ? `0${month}` : month.toString();
+
+    // Combine into a human-readable string
+    return `${formattedDay}-${formattedMonth}-${year}`;
+}

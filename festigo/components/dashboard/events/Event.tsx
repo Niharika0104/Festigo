@@ -14,18 +14,21 @@ import chatImage from "@/public/assets/images/chatIcon.png";
 import axios from "axios";
 import { MdChangeCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
+import { formatDate } from "@/Utils/date";
 const imageUrl =
   "https://s3-alpha-sig.figma.com/img/8971/7a1b/12c69d0d7b4e6a2c28958d2218e7fc80?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=U0xXS~jglNqKoXosgDE1ZR5GGf5d9EMMyFvHlTfJ~JdpaERaIbIeTUe8XvFuEyoRLYHfV1HbSt3OPXC9~HyTTMGLwkpx8E81m-ER~cIN3-69da-C2brtoi1WBtIqlm6~kQ5FG-9oaeg7Mu2khfjGqq9sVC22KxqJyi4Bw4-JjyQ6T~zjLVSAPPcfEPJNlBS2FHJsNZyua9Yw6eVp9c8XO6OfI8hKQIa6CXbqFoYO38KE7Bfo5QME5KsRONFvogerR869TJIuKW2oRycGEF7KwdZzm1WgZ~Ol9eZnsndB0MUZ9V~Wd~pwZekeio0kPJskBo69C~DsAicMeIydG4hSMg__";
 
-interface VendorData {
+interface EventData {
   vendorId?: string;
   vendorService: string;
   vendorName: string;
   contactInfo: string;
 }
-function Vendor() {
+export function Event() {
   const router = useRouter();
   const { event } = useEvent();
+  const { user } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalChatOpen, setmodalChatOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -37,7 +40,7 @@ function Vendor() {
   //const [ModalComponent,setModalComponent]=useState(VendorForm)
   const [loading, setLoading] = useState(true);
   const AddVendor = async () => {
-    const sendEventData = async (eventData: VendorData) => {
+    const sendEventData = async (eventData: EventData) => {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/vendor/createVendor`,
@@ -82,23 +85,24 @@ function Vendor() {
   };
 
   useEffect(() => {
-    const fetchVendors = async () => {
+    const fetchEvents = async () => {
       try {
-        const result = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/allvendors`,
-          {
-            eventId: event?.id,
-          }
+        const result = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/allevents?username=${user.username}`
         );
-        const res = result?.data?.message?.vendors;
-        setVendors(res || []);
+
+        console.log(result);
+        setVendors(result.data.data || []);
       } catch (error) {
-        console.error("Error fetching vendors:", error);
+        console.error("Error fetching events:", error);
       }
     };
 
-    fetchVendors();
-  }, [event, change]);
+    if (user) {
+      fetchEvents();
+    }
+  }, [user]);
+
   const OpenPopUp = () => {
     setContent({ title: "Add a vendor" });
     setTitle("Add a vendor");
@@ -135,23 +139,13 @@ function Vendor() {
 
       {/* Table Data */}
       <div>
-        <div className="flex justify-end mt-6 mx-5">
-          <button
-            className="bg-[#ff0000] text-white rounded-3xl px-6 py-2"
-            onClick={OpenPopUp}
-          >
-            Add a vendor
-          </button>
-        </div>
         <table className="w-full bg-white mt-5 table-auto">
           <thead className="h-[55px]">
             <tr className="text-center">
-              <th className="py-2">Vendor</th>
-              <th className="py-2">Location</th>
+              <th className="py-2">Event Title</th>
+              <th className="py-2">Start Date</th>
               <th className="py-2">Order Details</th>
-              <th className="py-2">Order Type</th>
               <th className="py-2">Order Status</th>
-              <th className="py-2">Time</th>
               <th className="py-2"></th>
               <th className="py-2"></th>
             </tr>
@@ -161,16 +155,15 @@ function Vendor() {
             {vendors?.map((item: any, idx) => {
               return (
                 <tr key={idx}>
-                  <td className="px-4 py-2">{item.vendorName}</td>
+                  <td className="px-4 py-2">{item.eventName}</td>
                   <td className="px-4 py-2">
-                    {item.Location == "" ? "-" : item.Location}
+                    {formatDate(item.startDateTime)}
                   </td>
                   <td className="px-4 py-2 flex flex-col items-center">
                     <p>Order Id #{generateOrderNumber()}</p>
                     <p className="text-black font-bold">{item.OrderTitle}</p>
                     <p className="text-black">${item.budget}</p>
                   </td>
-                  <td className="px-4 py-2">{item.OrderType}</td>
                   <td className="px-4 py-2">
                     <p className="bg-[#FFF5EB] rounded-full px-4 py-2 w-[100px] text-[#FB7E15] mx-auto">
                       Pending
@@ -216,5 +209,3 @@ function Vendor() {
     </div>
   );
 }
-
-export default Vendor;

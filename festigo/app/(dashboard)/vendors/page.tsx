@@ -1,13 +1,11 @@
-"use client"
-import React from 'react'
+import Vendor from "@/components/dashboard/vendor/Vendor";
 
-import Vendor from '@/components/dashboard/vendor/Vendor'
 function Page() {
   return (
     <div>
-      <Vendor/>
+      <Vendor />
     </div>
-  )
+  );
 }
 
-export default Page
+export default Page;
