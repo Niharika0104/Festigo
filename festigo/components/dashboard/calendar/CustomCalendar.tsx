@@ -4,6 +4,7 @@ import { FaChevronLeft ,FaChevronRight} from "react-icons/fa6";
 import EventForm  from '../../common/EventForm'
 import axios from 'axios';
 import { useAuth } from '@/app/context/AuthContext';
+import DropdownWithYears from './DropdownYear';
 interface CustomCalendarProps {
   year: number;
 }
@@ -118,6 +119,7 @@ const [title,setTitle]=useState("Create an Event")
  const [event,setEvent]=useState();
  const [change,setChange]=useState(false);
  const [username,setUsername]=useState( auth?.user?.username)
+ const [selectedYear,setSelectedYear]=useState(2024)
 const handleModalClose=()=>{
 setModalOpen(false);
 setChange(!change)
@@ -176,6 +178,7 @@ const dynamicClassName = `border border-dashed border-red-950 rounded-md m-2 bg-
 const totalDays = getDaysInMonth(currentMonth.idx + 1, year);
 const firstDayOfWeek = getFirstDayOfWeek(currentMonth.idx + 1, year);
 const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
+const years: number[] = Array.from(new Array(2024 - 1950 + 1), (_, index) => 1950 + index);
   return (
    <>
   <ResuableModal
@@ -193,8 +196,9 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
     <FaChevronLeft style={{...iconStyle,cursor: 'pointer' }} onClick={handleLeftClick}  />
     <div className='text-lg mx-12 w-auto object-contain absolute'>{currentMonth.month}</div>
     <FaChevronRight style={{...iconStyle,cursor: 'pointer' }} onClick={handleRightClick}/>
+  
   </div>
-  <button className=' bg-[#ff0000] text-white rounded-3xl py-3 px-3' onClick={()=>setModalOpen(true)}>Add a vendor</button>
+  <button className=' bg-[#ff0000] text-white rounded-3xl py-3 px-5' onClick={()=>setModalOpen(true)}>create event</button>
 
   </div>
  
