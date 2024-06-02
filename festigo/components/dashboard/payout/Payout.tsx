@@ -54,7 +54,7 @@ export function Payout() {
   const defaultEndDate = new Date("2024-10-01");
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
-  const [showCard, setShowCard] = useState(true);
+  const [showCard, setShowCard] = useState(false);
 
   const handleChange = ([newStartDate, newEndDate]) => {
     setStartDate(newStartDate);

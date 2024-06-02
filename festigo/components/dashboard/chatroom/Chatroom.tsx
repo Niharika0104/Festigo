@@ -36,7 +36,7 @@ export function Chatroom() {
   }, [user, event]);
 
   return (
-    <div className="h-full flex justify-start  items-start gap-8 w-11/12 mx-auto mb-12">
+    <div className="h-full flex justify-start  items-start gap-8 w-full mx-auto">
       {/* chat-lists */}
       <div className="w-[350px] border-r-[1px] border-[#DBDDE1] shrink-0 h-full bg-white px-2 flex flex-col gap-5 py-8">
         {/* Search bar */}
@@ -58,7 +58,7 @@ export function Chatroom() {
         </div>
 
         {/* chat-lists */}
-        <div className="flex flex-col overflow-y-auto p-4 w-full gap-2 justify-start items-start">
+        <div className="flex h-full flex-col overflow-y-auto p-4 w-full gap-2 justify-start items-start">
           {data &&
             data.map((chat) => {
               return (
