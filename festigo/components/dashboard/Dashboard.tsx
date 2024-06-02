@@ -56,7 +56,7 @@ export default function DashBoard() {
             <div className="relative flex flex-col md:flex-row gap-4 w-full ">
 
 
-                <div className="w-full min-h-screen flex flex-col pr-5 overflow-hidden ">
+                <div className="w-full min-h-max flex flex-col pr-5 overflow-hidden ">
 
 
                     {/* section 2  */}

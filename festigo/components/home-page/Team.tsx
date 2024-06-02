@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import NiharikaImg from "/public/assets/images/niharika.jpg";
+import NiharikaImg from "@/public/assets/images/Niharika.jpg";
 import rohan from "/public/assets/images/rohan.jpg";
 import rohan_logo from "/public/assets/images/rohan-logo.png";
 import himanshu from "/public/assets/images/himanshu.jpg";
