@@ -95,12 +95,14 @@ model PaymentsLedger {
 }
 
 model Budget {
+
   id              String  @id @default(uuid())
   eventId         String  @unique
   totalBudget     Decimal
   allocatedBudget Decimal
   remainingBudget Decimal
   event           Event   @relation(fields: [eventId], references: [id])
+  
 }
 
 model Channel {

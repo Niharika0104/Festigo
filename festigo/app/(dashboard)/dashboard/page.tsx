@@ -1,3 +1,6 @@
+
+"use client"
+
 import DashBoard from "@/components/dashboard/DashBoard";
 
 export default function DashBoardComponent() {
@@ -7,3 +10,8 @@ export default function DashBoardComponent() {
     </div>
   );
 }
+
+
+
+
+
