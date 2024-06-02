@@ -24,16 +24,10 @@ export default function Layout({
         <Sidebar />
       </div>
       <div className="w-5/6 ml-auto  flex flex-col">
-
         <TopBar></TopBar>
 
         {children}
-
       </div>
     </div>
   );
 }
-
-
-
-

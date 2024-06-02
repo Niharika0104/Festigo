@@ -56,10 +56,7 @@ export default function Login() {
             password: userData.password,
           };
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
-        payload
-      );
+      const response = await axios.post(`/api/auth/login`, payload);
 
       setUser(response.data?.data);
 
