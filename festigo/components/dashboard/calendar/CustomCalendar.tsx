@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ResuableModal from '../../common/Modal'
 import { FaChevronLeft ,FaChevronRight} from "react-icons/fa6";
 import EventForm  from '../../common/EventForm'
+import axios from 'axios';
+import { useAuth } from '@/app/context/AuthContext';
+import DropdownWithYears from './DropdownYear';
 interface CustomCalendarProps {
   year: number;
 }
@@ -28,7 +31,7 @@ const getDaysInMonth = (month: number, year: number): number => {
 
 
 interface Event {
-  date: string; 
+ eventId?:string;
   title: string; 
   description?: string; 
   startDate?: string; 
@@ -37,6 +40,7 @@ interface Event {
   edit?:boolean;
   fromTime?:string;
   toTime?:string;
+  CloseModal?:()=>void;
 }
 const  groupByStartDate=(arr: Event[])=>{
   const result: { [key: string]: Event[] } = {};
@@ -51,19 +55,19 @@ const  groupByStartDate=(arr: Event[])=>{
         result[monthDay].push(item);
       }
   });
-  console.log(result)
+ 
   return result;
 }
 const organizedEvents: { [key: string]: Event[] } = {};
 
-const sampleEvents: Event[] = [
-  { date: '2024-05-15', title: 'Jazz\'s birthday', description: 'Description for Event 1', startDate: '2024-05-15', endDate: '2024-05-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm" },
-  { date: '2024-05-15', title: 'Harpreet\'s wedding', description: 'Description for Event 1', startDate: '2024-06-15', endDate: '2024-06-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm"  },
-  { date: '2024-05-22', title: 'Diane graduation party', description: 'Description for Event 2', startDate: '2024-06-22', endDate: '2024-06-22', venue: 'Venue 2',fromTime:"11:00am",toTime:"11:40pm"  },
-  { date: '2024-05-28', title: 'Mira\'s wedding', description: 'Description for Event 3', startDate: '2024-05-28', endDate: '2024-05-28', venue: 'Venue 3',fromTime:"11:00am",toTime:"11:40pm"  },
+// const sampleEvents: Event[] = [
+//   { date: '2024-05-15', title: 'Jazz\'s birthday', description: 'Description for Event 1', startDate: '2024-05-15', endDate: '2024-05-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm" },
+//   { date: '2024-05-15', title: 'Harpreet\'s wedding', description: 'Description for Event 1', startDate: '2024-06-15', endDate: '2024-06-15', venue: 'Venue 1',fromTime:"11:00am",toTime:"11:40pm"  },
+//   { date: '2024-05-22', title: 'Diane graduation party', description: 'Description for Event 2', startDate: '2024-06-22', endDate: '2024-06-22', venue: 'Venue 2',fromTime:"11:00am",toTime:"11:40pm"  },
+//   { date: '2024-05-28', title: 'Mira\'s wedding', description: 'Description for Event 3', startDate: '2024-05-28', endDate: '2024-05-28', venue: 'Venue 3',fromTime:"11:00am",toTime:"11:40pm"  },
 
-  // Add more events as needed
-];
+//   // Add more events as needed
+// ];
 
 
 const getFirstDayOfWeek = (month: number, year: number): number => {
@@ -104,10 +108,54 @@ const iconStyle = { color: "red", fontSize: "2.5em",cursorStyle:"pointer"}
 
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ year }) => {
+
+  const auth = useAuth();
+ 
+  
 const [title,setTitle]=useState("Create an Event")
  const [currentMonth,setCurrentMonth]=useState(getCurrentMonth());
  const [modalOpen, setModalOpen] = useState(false);
+ const [list,setList]=useState([]);
  const [event,setEvent]=useState();
+ const [change,setChange]=useState(false);
+ const [username,setUsername]=useState( auth?.user?.username)
+ const [selectedYear,setSelectedYear]=useState(2024)
+const handleModalClose=()=>{
+setModalOpen(false);
+setChange(!change)
+}
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const arr:Event[] = [];
+      console.log(username)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/allevents?username=${username}`);
+      console.log(response.data);
+
+      response.data.data.forEach((item:any) => {
+        const startdatetime = item.startDateTime.split('T');
+        const enddatetime = item.endDateTime.split('T'); // Assuming you meant to split endDateTime here
+
+        arr.push({
+          eventId:item?.eventId,
+          title: item.eventName,
+          startDate: startdatetime[0],
+          endDate: enddatetime[0],
+          venue:item.venueId,
+          fromTime: startdatetime[1],
+          toTime: enddatetime[1]
+        });
+      });
+
+      setList(arr);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [change, username]);
+
  const handleLeftClick=()=>{
   setCurrentMonth(monthsValue[(currentMonth.idx-1)%12]);
 }
@@ -130,6 +178,7 @@ const dynamicClassName = `border border-dashed border-red-950 rounded-md m-2 bg-
 const totalDays = getDaysInMonth(currentMonth.idx + 1, year);
 const firstDayOfWeek = getFirstDayOfWeek(currentMonth.idx + 1, year);
 const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
+const years: number[] = Array.from(new Array(2024 - 1950 + 1), (_, index) => 1950 + index);
   return (
    <>
   <ResuableModal
@@ -141,20 +190,27 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
         
       />
     <div className="w-full h-full flex flex-col mb-9 relative">
-      <div className='abolute object-contain'>
-  <div className='w-[200px] h-[100px] flex justify-evenly items-center  '>
+      <div className='flex justify-between'>
+      <div className='abolute object-contain px-10 flex justify-between w-full items-center'>
+  <div className='w-[200px] h-[100px] flex justify-evenly items-center gap-12 relative'>
     <FaChevronLeft style={{...iconStyle,cursor: 'pointer' }} onClick={handleLeftClick}  />
-    <div className='text-lg'>{currentMonth.month}</div>
+    <div className='text-lg mx-12 w-auto object-contain absolute'>{currentMonth.month}</div>
     <FaChevronRight style={{...iconStyle,cursor: 'pointer' }} onClick={handleRightClick}/>
+  
   </div>
+  <button className=' bg-[#ff0000] text-white rounded-3xl py-3 px-5' onClick={()=>setModalOpen(true)}>create event</button>
+
   </div>
+ 
+  </div>
+ 
+  
+  <div className="flex-1 w-11/12 mx-auto">
   <div className="grid grid-cols-7">
     {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => (
       <div key={index} className="p-2">{day}</div>
     ))}
   </div>
-  
-  <div className="flex-1 pr-12">
   <div className="grid grid-cols-7 grid-auto-rows-[1fr]">
     {/* Fill dates of the first week of the current month */}
     {[...Array(getFirstDayOfWeek(currentMonth.idx + 1, year))].map((_, index) => {
@@ -162,7 +218,7 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
       return (
         <div key={index} className="empty border border-gray-300  text-gray-500 h-[120px] px-2">
           
-          {groupByStartDate(sampleEvents)[`${(currentMonth.idx)+1}:${day}`]?.length>0?"yes":day
+          {groupByStartDate(list)[`${(currentMonth.idx)+1}:${day}`]?.length>0?"yes":day
            
         }
         
@@ -175,14 +231,14 @@ const totalCells = Math.ceil((totalDays + firstDayOfWeek) / 7) * 7;
      
       >
 
-{groupByStartDate(sampleEvents)[`${(currentMonth.idx)+1}:${new String(day)}`]?.length>0?
+{groupByStartDate(list)[`${(currentMonth.idx)+1}:${new String(day+1)}`]?.length>0?
 
-groupByStartDate(sampleEvents)[`${currentMonth.idx + 1}:${ new String(day)}`]?.map((item, key) => (<div>
-  {day+1}
+groupByStartDate(list)[`${currentMonth.idx + 1}:${ new String(day+1)}`]?.map((item, key) => (<div>
+
   <p key={key} className={dynamicClassName}
-onClick={()=>{OpenPopUp({...item,edit:true})}}
+onClick={()=>{OpenPopUp({...item,edit:true,CloseModal:handleModalClose})}}
 >{item?.title.slice(0,15)}</p>
-</div>)) : <p className='cursor-pointer h-full' onClick={()=>{OpenPopUp({})}} >{day+1} </p> }
+</div>)) : <p className='cursor-pointer h-full' onClick={()=>{OpenPopUp({CloseModal:handleModalClose})}} >{day+1} </p> }
 </div>
     ))}
     {/* Fill dates of the next month in the last row */}

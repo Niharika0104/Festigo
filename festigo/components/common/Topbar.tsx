@@ -2,6 +2,7 @@ import InputField from "./InputField";
 
 import { PiUserCircleDuotone } from "react-icons/pi";
 
+import { useAuth } from "@/app/context/AuthContext";
 import { useState } from "react";
 
 import { CiSearch } from "react-icons/ci";
@@ -12,13 +13,11 @@ export default function TopBar() {
   function changeHandler(event: any) {
     setTextData({ text: event.target.value });
   }
-
   return (
     <div>
       <div className="relative w-full flex justify-between items-baseline mt-3 px-3 pr-6">
         <div className="flex flex-col pl-8">
           <p className="text-[#707EAE]">Hii Radhika, </p>
-
           <h1 className="text-[#2B3674] text-3xl font-bold">
             Welcome to Festigo!
           </h1>

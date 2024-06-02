@@ -1,6 +1,12 @@
 "use client";
 import axios from "axios";
 import { createContext, useState, useContext, useEffect } from "react";
+import { cookies } from 'next/headers'
+ 
+
+  const cookieStore = cookies()
+  const theme = cookieStore.get('token')
+ 
 
 // Create Auth Context
 const AuthContext = createContext(null);

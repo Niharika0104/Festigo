@@ -35,8 +35,10 @@ export async function POST(req: NextRequest) {
             if (isPasswordValid) {
                 const result = {
                     email: user.email,
+                    userId:user.id,
                     username: user.username,
                     phonenumber: user.phoneNumber,
+                
                     role: user.role,
                     authentication: user.authenticationType
                 };

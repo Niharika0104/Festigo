@@ -1,24 +1,37 @@
 "use client"
-import { useState } from 'react';
-import InputField from './InputField';
+import { useEffect, useState } from 'react';
 import DropdownMenu from './Dropdown';
+import axios from 'axios';
 import TimePicker from './TimeFields';
+import { useAuth } from '@/app/context/AuthContext';
 const YourComponent = (props:any) => {
-  console.log(props)
-  console.log("object")
+ const userInfo=useAuth();
+ console.log(props)
   const options=["Wedding","Birthday","Lunch Party","Dance party"]
-  const venueOptions=["Central hall","Daisy hall","lotus banquet hall","Park hall"]
-  const [eventType,setEventType]=useState(props?.eventType||"");
+ const [venueOptions,setVenueOptions]=useState([]);
+  const [eventType,setEventType]=useState(props?.eventType||"Birthday");
   const [venue,setVenue]=useState(props?.venue||"");
-  const [toTime,settoTime]=useState("");
+  const [toTime,settoTime]=useState(props?.toTime);
   const [title,setTitle]=useState(props?.title||"");
-  
-  const [fromTime,setFromTime]=useState("");
+  const closeModal=props?.CloseModal;
+  const [fromTime,setFromTime]=useState(props?.fromTime);
   const [startDate,setStartDate]=useState(props?.startDate||"");
   const [endDate,setEndDate]=useState(props?.endDate||"");
 
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/venue/allvenues`);
+        console.log(response.data);
+        setVenueOptions(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-
+    fetchData();
+  }, []);
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -29,13 +42,7 @@ const YourComponent = (props:any) => {
     eventTitle: '',
   });
 
-  const handleChange = (e:any) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+ 
 const handleSelect=(value:string)=>{
 setEventType(value);
 }
@@ -48,14 +55,30 @@ settoTime(value);
 const handleFromTimeChange=(value:string)=>{
   setFromTime(value);
   }
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
-    console.log(formData);
-    // Your form submission logic here
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/createEvent`, {
+      eventName: title,
+      startDateTime: new Date(startDate+"T"+fromTime),
+      endDateTime: new Date(endDate+"T"+toTime),
+      hostId: userInfo?.user?.username, 
+      venueId: venue,
+    });
+    closeModal();
   };
-
+const saveChanges=async(e:any)=>{
+  e.preventDefault();
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/editEvent`, {
+    eventName: title,
+    startDateTime: new Date(startDate+"T"+fromTime),
+    endDateTime: new Date(endDate+"T"+toTime),
+   eventId:props?.eventId,
+    venueId: venue,
+  });
+  closeModal();
+}
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg pr-10">
+    <form  className="w-full max-w-lg pr-10">
  <div className="mb-4">
         <label htmlFor="eventTitle" className="block text-gray-700 font-bold mb-2">
           Event Title
@@ -65,29 +88,46 @@ const handleFromTimeChange=(value:string)=>{
           id="eventTitle"
           name="eventTitle"
           value={title}
-          onChange={handleChange}
+          onChange={(e)=>setTitle(e.target.value)}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
-     <div className='flex justify-between'>
+     <div className='flex justify-between gap-10'>
       <div className="mb-4 ">
       <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
           Event Type
         </label>
-       <DropdownMenu options={options} onSelect={handleSelect} value={eventType||""}/>
+        <select  onChange={(e)=>setVenue(e.target.value)} className='shadow  border rounded  py-2 mr-12 px-5 w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+        value={eventType}
+        >
+        <option>{"select an option"}</option>
+        {options.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
+       </select>
        
       </div>
       <div className="mb-4">
       <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
           Venue 
         </label>
-       <DropdownMenu options={venueOptions} onSelect={handleVenueSelect} value={venue||""}/>
+       <select  onChange={(e)=>setVenue(e.target.value)} className='shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+       value={venue}>
+        <option>select an option</option>
+        {venueOptions.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.venueName}
+          </option>
+        ))}
+       </select>
        
       </div>
       </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between gap-8'>
        
-      <div className="mb-4">
+      <div className="mb-4 ">
       <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
          Start Date
         </label>
@@ -121,7 +161,7 @@ const handleFromTimeChange=(value:string)=>{
         <label htmlFor="fromDuration" className="block text-gray-700 font-bold mb-2">
         From
         </label>
-        <TimePicker handleChange={handleFromTimeChange} value={props?.fromTime}/>
+        <TimePicker handleChange={handleFromTimeChange} value={fromTime}/>
       </div>
 
    
@@ -129,7 +169,7 @@ const handleFromTimeChange=(value:string)=>{
         <label htmlFor="toDuration" className="block text-gray-700 font-bold mb-2">
         To
         </label>
-        <TimePicker handleChange={handleToTimeChange} value={props?.toTime}/>
+        <TimePicker handleChange={handleToTimeChange} value={toTime}/>
       </div>
 
 </div>
@@ -152,7 +192,7 @@ const handleFromTimeChange=(value:string)=>{
     <button
       type="submit"
       className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    >
+   onClick={saveChanges} >
    Save Changes
     </button>
       </div>
@@ -162,7 +202,7 @@ const handleFromTimeChange=(value:string)=>{
       <button
       type="submit"
       className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    >
+    onClick={handleSubmit}>
    Submit
     </button>}
        

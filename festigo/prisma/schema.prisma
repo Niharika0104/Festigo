@@ -39,6 +39,11 @@ model Guest_RSVP {
 model Users {
   id                 String               @id @default(uuid())
   username           String               @unique
+  firstname          String      @default("")
+  lastname          String       @default("")
+  gender            String       @default("")
+  location          String       @default("")
+  birthday   DateTime @default(now()) 
   email              String               @unique
   password           String
   phoneNumber        String               @unique
@@ -95,12 +100,14 @@ model PaymentsLedger {
 }
 
 model Budget {
+
   id              String  @id @default(uuid())
   eventId         String  @unique
   totalBudget     Decimal
   allocatedBudget Decimal
   remainingBudget Decimal
   event           Event   @relation(fields: [eventId], references: [id])
+  
 }
 
 model Channel {

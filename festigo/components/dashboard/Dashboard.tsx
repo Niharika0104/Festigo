@@ -93,7 +93,6 @@ export default function DashBoard() {
             </div>
 
             {/* Schedule an Event  */}
-
             <div className="flex justify-center gap-3 items-center bg-gradient-to-r from-[#FF8686] to-[#FF1818] rounded-2xl px-9">
               <p className="text-[#E9EDF7] text-[16px] w-[117px] text-wrap">
                 Schedule an Event
@@ -130,14 +129,12 @@ export default function DashBoard() {
               </div>
 
               {/* Your Transactions  */}
-
               <div className="flex flex-col bg-white w-fit p-1 rounded-xl px-8 pr-12">
                 <div>
                   <h1 className="text-[#1B2559] text-xl font-bold  py-2 text-[20px]">
                     Your transactions
                   </h1>
                 </div>
-
                 <div className="flex flex-col gap-3">
                   {TransportorData.map((data, index) => (
                     <div key={index} className="flex gap-7">

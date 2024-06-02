@@ -1,11 +1,14 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from '@/components/common/Dropdown';
-
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useAuth } from '@/app/context/AuthContext';
 function PrivacyInfo() {
+    const userInfo:any=useAuth();
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(userInfo?.user?.username);
     const [email, setEmail] = useState("");
     const [attendedEvents, setattendedEvents] = useState("");
     const [gender, setGender] = useState("");
@@ -14,9 +17,57 @@ function PrivacyInfo() {
     const [currentpassword, setCurrentPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [events,setEvents]=useState([])
     // this will be set from the event context
     const [currentEvent, setCurrentEvent] = useState("");
+   
+    useEffect(()=>{
+       
+        const fetchData=async ()=>{
+          const response=await  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/allevents?username=${username}`);
+          const data=response.data.data;
+          console.log(data)
+          setEvents(data);
+        }
+        const getProfile=async()=>{
+            const response=await  axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/getProfile`,
+                {username:username}
+            );
+            const data=response.data.data;
+            setFirstname(data?.firstname || "");
+            setUsername(data?.username || "");
 
+            setLastname(data?.lastname || "");
+            setEmail(data?.email || "");
+            setGender(data?.gender || "");
+            setlocation(data?.location || "");
+            setBirthday(data?.birthday ? new Date(data.birthday).toISOString().split('T')[0] : ""); // Format birthday to YYYY-MM-DD
+        }
+        fetchData();
+        getProfile();
+    },[username])
+ 
+    const onSave = async () => {
+        try {
+            const response = await axios.post('/api/profile/updateprofile', {
+                username,
+                firstname,
+                lastname,
+                email,
+                location,
+                gender,
+                birthday: new Date(birthday)
+            });
+            if (response.status === 200) {
+                toast.success("User updated successfully");
+            } else {
+                toast.error("Failed to update user");
+            }
+        } catch (error) {
+            console.error("Error updating user:", error);
+            toast.error("An error occurred while updating the user");
+        }
+    };
     const handleAttendedEvents = (value: string) => {
         setattendedEvents(value);
     };
@@ -112,12 +163,14 @@ function PrivacyInfo() {
                         <select name="" id="" className='bg-white h-[46px] border border-[#E4E7EB] w-[470px] px-4 focus:border-0' value={currentEvent}
                             onChange={(e: any) => { setCurrentEvent(e.target.value) }}>
                             <option value="-1" selected>select event</option>
-                            <option value="hello">dfds</option>
+                         {events?.map((item:any,idx)=>{
+                            return(<option value={item?.id} key={item?.id}>{item?.eventName}</option>)
+})}
                         </select>
                     </div>
                 </div>
                 <div className='flex justify-center'>
-                    <button className='bg-[#ff0000] px-4 py-3 rounded-3xl text-white'>Save Changes</button>
+                    <button className='bg-[#ff0000] px-4 py-3 rounded-3xl text-white' onClick={onSave}>Save Changes</button>
                 </div>
                 {/* password reset section */}
                 <div className='border border-gray-400 h-0 w-11/12  mx-auto mt-8'></div>
