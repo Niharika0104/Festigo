@@ -4,7 +4,6 @@ import { IoSettingsOutline } from "react-icons/io5"; // setting
 import { BiLogOut } from "react-icons/bi"; // logout
 import { MdOutlineDashboard } from "react-icons/md"; // dashboard
 
-
 import Booking from "@/public/assests/icons/booking.png";
 
 import Channels from "@/public/assests/icons/Channels.png";
@@ -18,60 +17,53 @@ import Shedule from "@/public/assests/icons/shedule.png";
 import Image from "next/image";
 
 export const SideBarData = [
-    {
-        title: "Dashboard",
-        icon: <MdOutlineDashboard size={22}/>,
-        link:"/dashboard"
-    },
-    {
-        title: "Vendors",
-        icon: <IoIosPerson size={22}/>,
-        link:"/vendors"
-    },
-    {
-        title: "Chatroom",
-        icon: <IoLogoWechat size={22}/>,
-        link:"/chatroom"
-      
-
-    },
-    {
-        title: "Bookings",
-
-        icon: <Image src={Booking} alt="Bookings" />
-    },
-    {
-        title: "Schedules",
-        icon: <Image src={Shedule} alt="Bookings" />,
-        link:"/calender"
-
-    },
-    {
-        title: "Guests",
-        icon: <Image src={Guest} alt="Guests" />,
-        link:"/guest"
-
-    },
-    {
-        title: "Channels",
-        icon: <Image src={Channels} alt="Channels" />
-    },
-    {
-        title: "Payouts",
-        icon: <Image src={Payouts} alt="Payouts" />,
-        link:"/payouts"
-    },
-    {
-        title: "Settings",
-        icon: <IoSettingsOutline size={22}/>,
-        link:"/settings"
-    },
-    {
-        title: "Log Out",
-        icon: <BiLogOut size={22}/>
-    }
+  {
+    title: "Dashboard",
+    icon: <MdOutlineDashboard size={22} />,
+    link: "/dashboard",
+  },
+  {
+    title: "Vendors",
+    icon: <IoIosPerson size={22} />,
+    link: "/vendors",
+  },
+  {
+    title: "Chatroom",
+    icon: <IoLogoWechat size={22} />,
+    link: "/chatroom",
+  },
+  {
+    title: "Bookings",
+    link: "/bookings",
+    icon: <Image src={Booking} alt="Bookings" />,
+  },
+  {
+    title: "Schedules",
+    icon: <Image src={Shedule} alt="Bookings" />,
+    link: "/calender",
+  },
+  {
+    title: "Guests",
+    icon: <Image src={Guest} alt="Guests" />,
+    link: "/guests",
+  },
+  {
+    title: "Channels",
+    icon: <Image src={Channels} alt="Channels" />,
+    link: "/channels",
+  },
+  {
+    title: "Payouts",
+    icon: <Image src={Payouts} alt="Payouts" />,
+    link: "/payouts",
+  },
+  {
+    title: "Settings",
+    icon: <IoSettingsOutline size={22} />,
+    link: "/settings",
+  },
+  {
+    title: "Log Out",
+    icon: <BiLogOut size={22} />,
+  },
 ];
-
-
-
-
