@@ -48,7 +48,9 @@ export const SideBarData = [
     },
     {
         title: "Guests",
-        icon: <Image src={Guest} alt="Guests" />
+        icon: <Image src={Guest} alt="Guests" />,
+        link:"/guest"
+
     },
     {
         title: "Channels",
