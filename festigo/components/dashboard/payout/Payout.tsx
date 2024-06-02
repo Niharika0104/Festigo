@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import DatePicker from "react-datepicker";
 import { PaymentRequestCard } from "./PaymentRequestCard";
+import facebook from "/public/assets/images/facebook.png";
 
 const payments = [
   {
@@ -54,7 +55,7 @@ export function Payout() {
   const defaultEndDate = new Date("2024-10-01");
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
-  const [showCard, setShowCard] = useState(true);
+  const [showCard, setShowCard] = useState(false);
 
   const handleChange = ([newStartDate, newEndDate]) => {
     setStartDate(newStartDate);
@@ -62,13 +63,13 @@ export function Payout() {
   };
 
   return (
-    <div>
+    <div className="h-full w-full">
       {showCard && (
         <div className="w-screen h-screen top-0 left-0 bg-white/[70%] z-50 absolute flex justify-center items-center">
           <PaymentRequestCard setShowCard={setShowCard} />
         </div>
       )}
-      <div className="w-full flex-col flex gap-8 rounded-[40px] bg-white  py-10 px-7">
+      <div className="w-full mx-auto flex-col h-full flex gap-8 rounded-[40px] bg-white  py-10 px-7">
         {/* page-title | search-bar | filter  */}
         <div className="w-full bg-white flex justify-between">
           {/* title */}
@@ -116,7 +117,7 @@ export function Payout() {
         </div>
 
         {/* Transaction table */}
-        <div className="w-full">
+        <div className="w-full h-full">
           <table className="w-full overflow-hidden">
             {/* Heading */}
             <thead className="bg-[#ED1212]/[75%] font-normal rounded-xl text-white">
