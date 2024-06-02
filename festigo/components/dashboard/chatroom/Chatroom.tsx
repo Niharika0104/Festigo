@@ -6,7 +6,7 @@ import { IoMdSearch } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { Conversation } from "./Conversation";
-import { useAuth } from "@/app/context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext"
 import { useEvent } from "@/app/context/EventContext";
 import { formatTime } from "../../../Utils/date";
 

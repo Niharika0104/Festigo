@@ -7,34 +7,41 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useEvent } from '@/app/context/EventContext';
 const YourComponent = (props:any) => {
-
+console.log(props)
 
   const [name,setName]=useState(props?.vendorName||"");
   const [phoneNumber,setPhoneNumber]=useState(props?.phoneNumber || "");
   const [email,setEmail]=useState(props?.email||"");
   const [serviceType,setServieType]=useState(props?.serviceType)
-  const event=useEvent();
+  const {event}=useEvent();
   const options=["Product","Service","Emergency"];
 const handleSubmit=async (email:string)=>{
 
 
 }
-const onSubmit=async ()=>{
+const onSubmit=async (e)=>{
+  e.preventDefault();
   const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/event/addVendor`,{
-    eventId: event?.event?.id,
-    vendorId:email
+    eventId: event?.id,
+    vendorId:email,
+    
    
   })
   props?.invoke();
+  props?.closemodal();
   toast.success("vendor details updated successfully")
 }
-const onSave=async()=>{
-  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendor/updateVendor`,{
+const onSave=async(e)=>{
+  e.preventDefault();
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors/updateVendor`,{
     vendorName:name,
-    email:email
+    email:email,
+    vendorId:props?.id
   })
   props?.invoke();
+  props?.closemodal();
   toast.success("vendor details updated successfully")
+
 }
 
   return (
@@ -80,7 +87,7 @@ const onSave=async()=>{
     <button
       type="submit"
       className="bg-[#f94444] mx-3 hover:bg-[#FD0123] text-white text-center font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      onClick={()=>{onSave()}}
+      onClick={onSave}
     >
    Save Changes
     </button>

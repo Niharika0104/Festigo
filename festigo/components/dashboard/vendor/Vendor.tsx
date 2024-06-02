@@ -13,7 +13,7 @@ import Image, { StaticImageData } from "next/image";
 import chatImage from "@/public/assets/images/chatIcon.png";
 import axios from 'axios';
 import { MdChangeCircle } from 'react-icons/md';
-
+import {useRouter} from 'next/navigation';
 const imageUrl="https://s3-alpha-sig.figma.com/img/8971/7a1b/12c69d0d7b4e6a2c28958d2218e7fc80?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=U0xXS~jglNqKoXosgDE1ZR5GGf5d9EMMyFvHlTfJ~JdpaERaIbIeTUe8XvFuEyoRLYHfV1HbSt3OPXC9~HyTTMGLwkpx8E81m-ER~cIN3-69da-C2brtoi1WBtIqlm6~kQ5FG-9oaeg7Mu2khfjGqq9sVC22KxqJyi4Bw4-JjyQ6T~zjLVSAPPcfEPJNlBS2FHJsNZyua9Yw6eVp9c8XO6OfI8hKQIa6CXbqFoYO38KE7Bfo5QME5KsRONFvogerR869TJIuKW2oRycGEF7KwdZzm1WgZ~Ol9eZnsndB0MUZ9V~Wd~pwZekeio0kPJskBo69C~DsAicMeIydG4hSMg__"
 
 interface VendorData {
@@ -23,6 +23,7 @@ interface VendorData {
     contactInfo: string;
   }
 function Vendor() {
+    const router=useRouter();
   const {event}=useEvent();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalChatOpen, setmodalChatOpen] = useState(false);
@@ -46,12 +47,15 @@ function Vendor() {
         }
       };
    }
+   const handleModalClose=()=>{
+    setModalOpen(false);
+   }
    const onChatClick=async (email:string)=>{
     const result = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/emailExists`, {
         email:email
       })
       if(result?.data?.exists===true){
-      return  ;
+      return   router.push('/chatroom');;
       }
       else {
         setmodalChatOpen(true)
@@ -103,14 +107,14 @@ function generateOrderNumber() {
                 setOpen={setModalOpen}
                 title={title}
                 content={VendorForm}
-                contentProps={content}
+                contentProps={{...content,closemodal:handleModalClose}}
             />
              <ReusableModal
                 open={modalChatOpen}
                 setOpen={setmodalChatOpen}
                 title={title}
                 content={InviteUserComponent}
-                contentProps={{email:email}}
+                contentProps={{email:email,closemodal:handleModalClose}}
             />
             {/* Images */}
             <div className='flex justify-between'>

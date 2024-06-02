@@ -8,11 +8,11 @@ import { NextRequest,NextResponse } from 'next/server'
 
 interface EventData {
  vendorId:string;
- serviceType:string;
- vendorName:string;
- Location:string;
- email:string;
- budget:string;
+ serviceType?:string;
+ vendorName?:string;
+ Location?:string;
+ email?:string;
+ budget?:string;
   }
 export  async function POST(req:NextRequest, res:NextResponse){
  
