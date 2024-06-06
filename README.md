@@ -6,3 +6,4 @@ Prototype link: https://www.figma.com/proto/6nLRk40BpOgl4lNwFqCQTe/Event-Website
 <br>
 Figma Vide Explanation: https://youtu.be/Paq7I1Ru22s
 <br>
+Final PPT link: https://drive.google.com/file/d/11gxMyhAOdclFWOroMn3nnXR2aQFL7_6-/view?usp=sharing
